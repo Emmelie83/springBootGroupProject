@@ -23,6 +23,7 @@ public class Message {
     @Setter
     @CreatedDate
     @Column ("Date")
+    @CreatedDate
     private LocalDate date;
     @Getter
     @Setter
