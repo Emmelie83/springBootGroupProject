@@ -31,8 +31,9 @@ public class User {
     @Column("eMail")
     private String eMail;
 
-    @OneToMany
+    @Getter
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
     List<Message> messages = new ArrayList<>();
-
 
 }
