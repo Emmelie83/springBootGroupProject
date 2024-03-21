@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.relational.core.mapping.Column;
 
 
@@ -20,6 +21,7 @@ public class Message {
     private Long id;
     @Getter
     @Setter
+    @CreatedDate
     @Column ("Date")
     private LocalDate date;
     @Getter

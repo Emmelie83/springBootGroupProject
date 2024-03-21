@@ -1,6 +1,7 @@
 package se.iths.springbootgroupproject.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
@@ -18,12 +19,5 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/users")
-    public List<User> getAllUsers() {
-    var users = userRepository.findAllBy().stream()
-            .peek(user -> user.setUserName(HtmlUtils.htmlEscape(user.getUserName())))
-            .toList();
-        System.out.println("All users are read from database!");
-        return users;
-    }
+   
 }
