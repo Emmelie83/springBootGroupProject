@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -14,28 +15,24 @@ import java.time.LocalDate;
 import java.util.Locale;
 
 @Entity
+@Data
 public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Getter
-    @Setter
-    @CreatedDate
-    @Column ("Date")
-    @CreatedDate
+
+
+    @Column ("date")
     private LocalDate date;
-    @Getter
-    @Setter
-    @Column ("Title")
+
+    @Column ("title")
     private String messageTitle;
-    @Getter
-    @Setter
-    @Column ("Message Body")
+
+    @Column ("message_body")
     private String messageBody;
-    @Getter
-    @Setter
-    @Column("Author")
+
+    @Column("author")
     private String user;
 
 }
