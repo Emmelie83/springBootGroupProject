@@ -22,6 +22,7 @@ public class Message {
     private Long id;
 
     @Setter
+    @CreatedDate
     @Column ("date")
     private LocalDate date;
 
