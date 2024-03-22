@@ -15,23 +15,26 @@ import java.time.LocalDate;
 import java.util.Locale;
 
 @Entity
-@Data
+@Getter
 public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Setter
     @Column ("date")
     private LocalDate date;
 
+    @Setter
     @Column ("title")
     private String messageTitle;
 
+    @Setter
     @Column ("message_body")
     private String messageBody;
 
+    @Setter
     @Column("author")
     private String user;
 
