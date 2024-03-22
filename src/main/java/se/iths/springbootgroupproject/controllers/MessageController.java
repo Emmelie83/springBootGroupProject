@@ -1,10 +1,9 @@
 package se.iths.springbootgroupproject.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.HtmlUtils;
 import se.iths.springbootgroupproject.entities.Message;
-import se.iths.springbootgroupproject.entities.User;
 import se.iths.springbootgroupproject.repos.MessageRepository;
 import se.iths.springbootgroupproject.services.MessageService;
 

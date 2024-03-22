@@ -12,7 +12,6 @@ import org.springframework.data.relational.core.mapping.Column;
 
 
 import java.time.LocalDate;
-import java.util.Locale;
 
 @Entity
 @Getter
