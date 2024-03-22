@@ -1,7 +1,6 @@
 package se.iths.springbootgroupproject.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Setter;
 import lombok.Getter;
 import org.springframework.data.relational.core.mapping.Column;

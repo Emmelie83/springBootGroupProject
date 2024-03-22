@@ -12,7 +12,6 @@ import org.springframework.data.relational.core.mapping.Column;
 
 
 import java.time.LocalDate;
-import java.util.Locale;
 
 @Entity
 @Getter
@@ -23,6 +22,7 @@ public class Message {
     private Long id;
 
     @Setter
+    @CreatedDate
     @Column ("date")
     private LocalDate date;
 
