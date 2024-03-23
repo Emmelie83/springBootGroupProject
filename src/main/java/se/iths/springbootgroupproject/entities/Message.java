@@ -23,19 +23,23 @@ public class Message {
 
     @Setter
     @CreatedDate
-    @Column ("date")
+    @Column("date")
     private LocalDate date;
 
     @Setter
-    @Column ("title")
+    @Column("title")
     private String messageTitle;
 
     @Setter
-    @Column ("message_body")
+    @Column("message_body")
     private String messageBody;
 
     @Setter
     @Column("author")
     private String user;
+
+    @Setter
+    @Column("is_public")
+    private boolean isPublic = false;
 
 }
