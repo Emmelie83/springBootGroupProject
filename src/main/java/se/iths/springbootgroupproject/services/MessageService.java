@@ -27,6 +27,6 @@ public class MessageService {
     }
 
     public List<PublicMessage> findAllByPrivateMessageIsFalse() {
-        return messageRepository.findAllByIsPublicIsFalse();
+        return messageRepository.findAllByIsPublicIsTrue();
     }
 }

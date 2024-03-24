@@ -11,7 +11,7 @@ public interface MessageRepository extends ListCrudRepository<Message, Long> {
 
     List<Message> findAllBy();
 
-    List<PublicMessage> findAllByIsPublicIsFalse();
+    List<PublicMessage> findAllByIsPublicIsTrue();
 
 
 }
