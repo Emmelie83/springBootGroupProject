@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import se.iths.springbootgroupproject.entities.Message;
-import se.iths.springbootgroupproject.repos.MessageRepository;
 import se.iths.springbootgroupproject.services.MessageService;
 
 import java.util.List;
