@@ -9,6 +9,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
+
 @Configuration
 public class MessageConfig implements WebMvcConfigurer {
     //identify the locale of a user.
@@ -20,13 +21,7 @@ public class MessageConfig implements WebMvcConfigurer {
         slr.setTimeZoneAttributeName("session.current.timezone");
         return slr;
     }
-    //    @Bean
-//    public LocaleResolver localeResolver() {
-//        CookieLocaleResolver slr = new CookieLocaleResolver();
-//        slr.setDefaultLocale(Locale.ENGLISH);
-//        return slr;
-//    }
-    //Handle changes from user for selected locale
+
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor localeChangeInterceptor
@@ -34,6 +29,7 @@ public class MessageConfig implements WebMvcConfigurer {
         localeChangeInterceptor.setParamName("lang");
         return localeChangeInterceptor;
     }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
