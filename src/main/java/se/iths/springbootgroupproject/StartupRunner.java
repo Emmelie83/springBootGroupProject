@@ -33,6 +33,7 @@ public class StartupRunner implements ApplicationRunner {
             message.setMessageBody("Hello everybody");
             message.setUser("John Doe");
             message.setDate(LocalDate.now());
+            message.setPublic(true);
             messageRepository.save(message);
         }
     }
