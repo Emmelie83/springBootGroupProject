@@ -3,10 +3,7 @@ package se.iths.springbootgroupproject.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import se.iths.springbootgroupproject.MessageDTO;
 import se.iths.springbootgroupproject.repos.MessageRepository;
-
-import java.util.stream.Collectors;
 
 @Controller
 public class WebController {
