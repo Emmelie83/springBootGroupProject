@@ -5,7 +5,6 @@ CREATE TABLE message
     message_title VARCHAR(255)          NULL,
     message_body  VARCHAR(255)          NULL,
     user          VARCHAR(255)          NULL,
-    is_public     BIT(1)                NOT NULL,
     user_id       BIGINT                NULL,
     CONSTRAINT pk_message PRIMARY KEY (id)
 );
