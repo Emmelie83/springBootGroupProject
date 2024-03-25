@@ -12,7 +12,6 @@ import java.util.Locale;
 
 @Configuration
 public class MessageConfig implements WebMvcConfigurer {
-    //identify the locale of a user.
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
