@@ -30,11 +30,6 @@ public class User {
 
     @Setter
     @Column("email")
-    private String eMail;
-
-    @Setter
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
-    List<Message> messages = new ArrayList<>();
+    private String email;
 
 }
