@@ -25,4 +25,12 @@ public class WebController {
         return "messages";
     // Todo: use a record instead of the whole object when adding to the model
     }
+
+    @GetMapping("/web/publicMessages")
+    public String getPublicMessages(Model model) {
+        var messages = messageRepository.findAllByIsPublicIsTrue();
+        model.addAttribute("messages", messages);
+
+        return "messages";
+    }
 }
