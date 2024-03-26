@@ -80,6 +80,10 @@ public class WebController {
 
         Message originalMessage = messageService.findById(messageId).get();
 
+        // Update the properties of the original message with the values from the form submission
+        originalMessage.setMessageTitle(message.getMessageTitle());
+        originalMessage.setMessageBody(message.getMessageBody());
+
         messageService.updateMessage(messageId, originalMessage);
 
         return "redirect:/web/messages";
