@@ -3,8 +3,10 @@ package se.iths.springbootgroupproject;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import se.iths.springbootgroupproject.entities.Message;
+import se.iths.springbootgroupproject.entities.User;
 import se.iths.springbootgroupproject.repos.MessageRepository;
 import org.springframework.stereotype.Component;
+import se.iths.springbootgroupproject.repos.UserRepository;
 
 import java.time.LocalDate;
 import java.util.logging.Logger;
@@ -15,9 +17,12 @@ public class StartupRunner implements ApplicationRunner {
             = Logger.getLogger(ApplicationRunner.class.getName());
 
     private final MessageRepository messageRepository;
+    private final UserRepository userRepository;
 
-    public StartupRunner(MessageRepository messageRepository) {
+    public StartupRunner(MessageRepository messageRepository,
+                         UserRepository userRepository) {
         this.messageRepository = messageRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -31,7 +36,7 @@ public class StartupRunner implements ApplicationRunner {
             var message = new Message();
             message.setMessageTitle("Welcome to the circus");
             message.setMessageBody("Hello everybody");
-            message.setUser("John Doe");
+            message.setUser("Kungen");
             message.setDate(LocalDate.now());
             message.setPublic(true);
             messageRepository.save(message);
