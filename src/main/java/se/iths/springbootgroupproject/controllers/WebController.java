@@ -12,6 +12,8 @@ import se.iths.springbootgroupproject.CreateMessageFormData;
 import se.iths.springbootgroupproject.repos.MessageRepository;
 import se.iths.springbootgroupproject.services.MessageService;
 
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping("/web")
 public class WebController {
@@ -40,7 +42,9 @@ public class WebController {
 
     @GetMapping("create")
     public String postMessage(Model model) {
-        model.addAttribute("formData", new CreateMessageFormData());
+        CreateMessageFormData formData = new CreateMessageFormData();
+        formData.setDate(LocalDate.now()); // Set the current date
+        model.addAttribute("formData", formData);
         return "create";
     }
 

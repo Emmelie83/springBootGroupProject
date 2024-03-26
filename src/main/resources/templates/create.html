@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Add a cat</title>
+    <title>Add a message</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<h1>Form</h1>
+<h1>Message</h1>
 <form action="#" th:action="@{/web/create}" th:object="${formData}" method="post">
 
     <p><label for="messageTitle" th:text="#{message.title} + ':'"/>
@@ -13,7 +13,7 @@
     <p th:if="${#fields.hasErrors('messageTitle')}"
        th:text="${#strings.listJoin(#fields.errors('messageTitle'), ', ')}"></p>
     <p><label for="messageBody" th:text="#{message.body} + ':'"/>
-        <input id="messageBody" type="text" th:field="*{messageBody}"/>
+        <textarea id="messageBody" th:field="*{messageBody}" cols="100" rows="6"></textarea>
     <p th:if="${#fields.hasErrors('messageBody')}"
        th:text="${#strings.listJoin(#fields.errors('messageBody'), ', ')}"></p>
 
