@@ -1,14 +1,11 @@
 package se.iths.springbootgroupproject;
 
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.relational.core.mapping.Column;
-import se.iths.springbootgroupproject.entities.Message;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+import se.iths.springbootgroupproject.entities.Message;
 
 import java.time.LocalDate;
 @Getter

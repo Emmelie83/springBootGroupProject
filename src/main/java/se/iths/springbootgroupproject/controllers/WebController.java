@@ -1,15 +1,13 @@
 package se.iths.springbootgroupproject.controllers;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import se.iths.springbootgroupproject.CreateMessageFormData;
-import se.iths.springbootgroupproject.repos.MessageRepository;
+import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.services.MessageService;
 
 import java.time.LocalDate;
@@ -29,7 +27,6 @@ public class WebController {
         model.addAttribute("messages", messages);
 
         return "messages";
-    // Todo: use a record instead of the whole object when adding to the model
     }
 
     @GetMapping("publicMessages")
@@ -43,11 +40,10 @@ public class WebController {
     @GetMapping("create")
     public String postMessage(Model model) {
         CreateMessageFormData formData = new CreateMessageFormData();
-        formData.setDate(LocalDate.now()); // Set the current date
+        formData.setDate(LocalDate.now());
         model.addAttribute("formData", formData);
         return "create";
     }
-
 
 
     @PostMapping("create")
@@ -55,11 +51,37 @@ public class WebController {
     public String greetingSubmit(@Valid @ModelAttribute("formData") CreateMessageFormData message,
                                  BindingResult bindingResult,
                                  Model model) {
-        if(bindingResult.hasErrors() ){
+        if (bindingResult.hasErrors()) {
             return "create";
         }
-
         messageService.saveMessage(message.toEntity());
+        return "redirect:/web/messages";
+    }
+
+    @GetMapping("update/{messageId}")
+    public String updateMessage(@PathVariable Long messageId, Model model) {
+        Message message = messageService.findById(messageId).get();
+        CreateMessageFormData formData = new CreateMessageFormData();
+        formData.setMessageTitle(message.getMessageTitle());
+        formData.setMessageBody(message.getMessageBody());
+        formData.setDate(LocalDate.now());
+        model.addAttribute("formData", formData);
+        model.addAttribute("originalMessage", message); // Add the original message to the model
+        return "update";
+    }
+
+    @PostMapping("update/{messageId}")
+    public String updateMessage(@PathVariable Long messageId, @Valid @ModelAttribute("formData") CreateMessageFormData message,
+                                BindingResult bindingResult,
+                                Model model) {
+        if (bindingResult.hasErrors()) {
+            return "update";
+        }
+
+        Message originalMessage = messageService.findById(messageId).get();
+
+        messageService.updateMessage(messageId, originalMessage);
+
         return "redirect:/web/messages";
     }
 }
