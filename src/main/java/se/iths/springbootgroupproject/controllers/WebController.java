@@ -10,6 +10,8 @@ import se.iths.springbootgroupproject.CreateMessageFormData;
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.services.MessageService;
 
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping("/web")
 public class WebController {
@@ -58,27 +60,27 @@ public class WebController {
     @GetMapping("update/{messageId}")
     public String updateMessage(@PathVariable Long messageId, Model model) {
         Message message = messageService.findById(messageId).get();
-        CreateMessageFormData formData = new CreateMessageFormData();
-        formData.setMessageTitle(message.getMessageTitle());
-        formData.setMessageBody(message.getMessageBody());
+
+        CreateMessageFormData formData = new CreateMessageFormData(message.getMessageTitle(), message.getMessageBody());
         model.addAttribute("formData", formData);
         model.addAttribute("originalMessage", message); // Add the original message to the model
+        model.addAttribute("messageId", messageId);
         return "update";
     }
 
     @PostMapping("update/{messageId}")
-    public String updateMessage(@PathVariable Long messageId, @Valid @ModelAttribute("formData") CreateMessageFormData message,
+    public String greetingSubmit(@PathVariable Long messageId, @Valid @ModelAttribute("formData") CreateMessageFormData message,
                                 BindingResult bindingResult,
                                 Model model) {
         if (bindingResult.hasErrors()) {
             return "update";
         }
 
-        Message originalMessage = messageService.findById(messageId).get();
 
-        // Update the properties of the original message with the values from the form submission
+        Message originalMessage = messageService.findById(messageId).get();
         originalMessage.setMessageTitle(message.getMessageTitle());
         originalMessage.setMessageBody(message.getMessageBody());
+        originalMessage.setDate(LocalDate.now());
 
         messageService.updateMessage(messageId, originalMessage);
 

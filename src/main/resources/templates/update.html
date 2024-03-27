@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Message</h1>
-<form action="#" th:action="@{/web/update(messageId=${messageId})}" th:object="${formData}" method="post">
+<form action="#" th:attr="action='/web/update/'+ ${messageId}" th:object="${formData}" method="post">
 
     <input type="hidden" id="messageId" name="messageId" th:value="${messageId}"/>
     <p><label for="messageTitle" th:text="#{message.title} + ':'"/>

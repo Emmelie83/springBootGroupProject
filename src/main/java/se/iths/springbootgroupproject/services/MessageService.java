@@ -1,11 +1,12 @@
 package se.iths.springbootgroupproject.services;
 
 import jakarta.persistence.EntityNotFoundException;
-import se.iths.springbootgroupproject.entities.Message;
 import org.springframework.stereotype.Service;
+import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.entities.PublicMessage;
 import se.iths.springbootgroupproject.repos.MessageRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,10 +20,9 @@ public class MessageService {
     }
 
     public Message updateMessage(Long id, Message updateMessage) {
-        Message existingMessage = messageRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Message not found with id: "+id));
-        if (updateMessage.getDate() != null) {
-            existingMessage.setDate(updateMessage.getDate());
-        }
+        Message existingMessage = messageRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Message not found with id: " + id));
+
+        existingMessage.setDate(LocalDate.now());
 
         if (updateMessage.getMessageTitle() != null) {
             existingMessage.setMessageTitle(updateMessage.getMessageTitle());
