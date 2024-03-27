@@ -27,11 +27,16 @@
             <td th:text="${message.messageBody}">Lorum ipsum</td>
             <td th:text="${message.user}">Jane Doe</td>
             <td th:text="${message.date}">2020-01-01</td>
+            <td>
+                <a th:href="@{/web/update/{messageId}(messageId=${message.id})}">Update Message</a>
+            </td>
         </tr>
         </tbody>
     </table>
 
     <p th:unless="${not messages.isEmpty()}">No messages found.</p>
 </div>
+<a href="/web/create" th:text="#{postmessage}"></a>
+<!--<a href="/web/update" th:text="#{updatemessage}"></a>-->
 </body>
 </html>

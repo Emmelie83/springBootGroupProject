@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Update a message</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Message</h1>
+<form action="#" th:attr="action='/web/update/'+ ${messageId}" th:object="${formData}" method="post">
+
+    <input type="hidden" id="messageId" name="messageId" th:value="${messageId}"/>
+    <p><label for="messageTitle" th:text="#{message.title} + ':'"/>
+        <input id="messageTitle" type="text" th:field="*{messageTitle}" th:value="${originalMessage.messageTitle}"/>
+    <p th:if="${#fields.hasErrors('messageTitle')}"
+       th:text="${#strings.listJoin(#fields.errors('messageTitle'), ', ')}"></p>
+    <p><label for="messageBody" th:text="#{message.body} + ':'"/>
+        <textarea id="messageBody" th:field="*{messageBody}" cols="100" rows="6" th:value="${originalMessage.messageBody}"></textarea>
+    <p th:if="${#fields.hasErrors('messageBody')}"
+       th:text="${#strings.listJoin(#fields.errors('messageBody'), ', ')}"></p>
+
+    <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
+</form>
+</body>
+</html>

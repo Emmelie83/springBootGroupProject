@@ -1,9 +1,6 @@
 package se.iths.springbootgroupproject.controllers;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.services.MessageService;
 
@@ -34,4 +31,10 @@ public class MessageController {
 
         return messageService.saveMessage(message);
     }
+    @PutMapping("/messages/{id}")
+    public Message updateMessage(@PathVariable Long id, @RequestBody Message message) {
+
+        return messageService.updateMessage(id,message);
+    }
+
 }

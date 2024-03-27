@@ -1,33 +1,89 @@
 package se.iths.springbootgroupproject.controllers;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import se.iths.springbootgroupproject.repos.MessageRepository;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import se.iths.springbootgroupproject.CreateMessageFormData;
+import se.iths.springbootgroupproject.entities.Message;
+import se.iths.springbootgroupproject.services.MessageService;
+
+import java.time.LocalDate;
 
 @Controller
+@RequestMapping("/web")
 public class WebController {
+    MessageService messageService;
 
-    MessageRepository messageRepository;
-
-    public WebController(MessageRepository messageRepository) {
-        this.messageRepository = messageRepository;
+    public WebController(MessageService messageService) {
+        this.messageService = messageService;
     }
 
-    @GetMapping("/web/messages")
+    @GetMapping("messages")
     public String getMessages(Model model) {
-        var messages = messageRepository.findAll();
+        var messages = messageService.findAllBy();
         model.addAttribute("messages", messages);
 
         return "messages";
-    // Todo: use a record instead of the whole object when adding to the model
     }
 
-    @GetMapping("/web/publicMessages")
+    @GetMapping("publicMessages")
     public String getPublicMessages(Model model) {
-        var messages = messageRepository.findAllByIsPublicIsTrue();
+        var messages = messageService.findAllByPrivateMessageIsFalse();
         model.addAttribute("messages", messages);
 
         return "messages";
+    }
+
+    @GetMapping("create")
+    public String postMessage(Model model) {
+        CreateMessageFormData formData = new CreateMessageFormData();
+        model.addAttribute("formData", formData);
+        return "create";
+    }
+
+
+    @PostMapping("create")
+
+    public String greetingSubmit(@Valid @ModelAttribute("formData") CreateMessageFormData message,
+                                 BindingResult bindingResult,
+                                 Model model) {
+        if (bindingResult.hasErrors()) {
+            return "create";
+        }
+        messageService.saveMessage(message.toEntity());
+        return "redirect:/web/messages";
+    }
+
+    @GetMapping("update/{messageId}")
+    public String updateMessage(@PathVariable Long messageId, Model model) {
+        Message message = messageService.findById(messageId).get();
+
+        CreateMessageFormData formData = new CreateMessageFormData(message.getMessageTitle(), message.getMessageBody());
+        model.addAttribute("formData", formData);
+        model.addAttribute("originalMessage", message); // Add the original message to the model
+        model.addAttribute("messageId", messageId);
+        return "update";
+    }
+
+    @PostMapping("update/{messageId}")
+    public String greetingSubmit(@PathVariable Long messageId, @Valid @ModelAttribute("formData") CreateMessageFormData message,
+                                BindingResult bindingResult,
+                                Model model) {
+        if (bindingResult.hasErrors()) {
+            return "update";
+        }
+
+
+        Message originalMessage = messageService.findById(messageId).get();
+        originalMessage.setMessageTitle(message.getMessageTitle());
+        originalMessage.setMessageBody(message.getMessageBody());
+        originalMessage.setDate(LocalDate.now());
+
+        messageService.updateMessage(messageId, originalMessage);
+
+        return "redirect:/web/messages";
     }
 }
