@@ -10,8 +10,6 @@ import se.iths.springbootgroupproject.CreateMessageFormData;
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.services.MessageService;
 
-import java.time.LocalDate;
-
 @Controller
 @RequestMapping("/web")
 public class WebController {
@@ -40,7 +38,6 @@ public class WebController {
     @GetMapping("create")
     public String postMessage(Model model) {
         CreateMessageFormData formData = new CreateMessageFormData();
-        formData.setDate(LocalDate.now());
         model.addAttribute("formData", formData);
         return "create";
     }
@@ -64,7 +61,6 @@ public class WebController {
         CreateMessageFormData formData = new CreateMessageFormData();
         formData.setMessageTitle(message.getMessageTitle());
         formData.setMessageBody(message.getMessageBody());
-        formData.setDate(LocalDate.now());
         model.addAttribute("formData", formData);
         model.addAttribute("originalMessage", message); // Add the original message to the model
         return "update";
