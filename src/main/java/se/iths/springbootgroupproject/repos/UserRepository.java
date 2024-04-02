@@ -8,6 +8,6 @@ public interface UserRepository extends ListCrudRepository<User, Long> {
 
 
 
-    //@EntityGraph(attributePaths = "allUsers")
-    //List<User> findAllBy();
+    @EntityGraph(attributePaths = "allUsers")
+    List<User> findAllBy();
 }

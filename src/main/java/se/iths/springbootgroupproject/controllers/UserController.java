@@ -1,10 +1,8 @@
 package se.iths.springbootgroupproject.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
+import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.repos.UserRepository;
 import se.iths.springbootgroupproject.entities.User;
 
@@ -19,5 +17,28 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-   
+    @GetMapping("/allUsers")
+    public List<User> getAllUsers() {
+        List<User> user = userRepository.findAllBy();
+
+        System.out.println("All users are read from the database!");
+
+        return user;
+
+    }
+
+    @GetMapping("/users/{id}")
+    public User getUserById(@PathVariable Long id) {
+        return userRepository.findAllBy().stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    @PostMapping("/users")
+    public User createUser(@RequestBody User user) {
+        return userRepository.save(user);
+    }
+    @PutMapping("/users/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+        user.getId();
+        return userRepository.save(user);
+    }
 }
