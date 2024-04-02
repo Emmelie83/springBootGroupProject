@@ -41,4 +41,5 @@ public class Message {
     @Column("is_public")
     private boolean isPublic = false;
 
+
 }

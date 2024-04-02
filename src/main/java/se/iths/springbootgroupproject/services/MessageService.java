@@ -34,9 +34,9 @@ public class MessageService {
             existingMessage.setUser(updateMessage.getUser());
         }
 
-        if (updateMessage.isPublic()) {
-            existingMessage.isPublic();
-        }
+
+            existingMessage.setPublic(updateMessage.isPublic());
+
         return messageRepository.save(existingMessage);
     }
 
