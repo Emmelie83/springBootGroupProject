@@ -32,8 +32,9 @@ public class Message {
     private String messageBody;
 
     @Setter
-    @Column("author")
-    private String user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Setter
     @Column("is_public")
