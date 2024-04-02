@@ -13,3 +13,9 @@ services:
     image: 'redis:latest'
     ports:
       - '6379'
+
+  libretranslate:
+    image: 'libretranslate/libretranslate:latest'
+    command: '--load-only en,sv'
+    ports:
+      - '5000:5000'

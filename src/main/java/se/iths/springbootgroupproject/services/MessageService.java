@@ -43,25 +43,6 @@ public class MessageService {
         return messageRepository.save(existingMessage);
     }
 
-    public Message updateMessage(Long id, Message updateMessage) {
-        Message existingMessage = messageRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Message not found with id: " + id));
-
-        existingMessage.setDate(LocalDate.now());
-
-        if (updateMessage.getMessageTitle() != null) {
-            existingMessage.setMessageTitle(updateMessage.getMessageTitle());
-        }
-
-        if (updateMessage.getMessageBody() != null) {
-            existingMessage.setMessageBody(updateMessage.getMessageBody());
-        }
-
-        if (updateMessage.getUser() != null) {
-            existingMessage.setUser(updateMessage.getUser());
-        }
-
-        return messageRepository.save(existingMessage);
-    }
 
     public Message saveMessage(Message message) {
 
