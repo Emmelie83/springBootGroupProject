@@ -1,12 +1,10 @@
 package se.iths.springbootgroupproject.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.relational.core.mapping.Column;
 
 
@@ -14,6 +12,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class Message {
 
     @Id
@@ -22,7 +21,6 @@ public class Message {
 
     @Setter
     @CreatedDate
-    @Column("date")
     private LocalDate date;
 
     @Setter
