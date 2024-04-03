@@ -8,6 +8,7 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -26,12 +27,13 @@ public class SecurityConfig {
     SecurityFilterChain web(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/login", "/oauth/**", "/logout", "/error**").permitAll()
-                        .requestMatchers("/web/create").hasRole("ADMIN")
+                        .requestMatchers("/", "/login", "/oauth/**", "/logout", "/error**", "/web/publicMessages").permitAll()
 
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(Customizer.withDefaults());
+        http.csrf(AbstractHttpConfigurer::disable);
+
         return http.build();
     }
 
