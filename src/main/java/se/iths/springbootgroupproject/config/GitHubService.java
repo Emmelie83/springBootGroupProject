@@ -12,11 +12,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Service
 public class GitHubService {
+
     private final RestClient restClient;
 
     public GitHubService(RestClient restClient) {
         this.restClient = restClient;
     }
+
 
     @Retryable
     public List<Email> getEmails(OAuth2AccessToken accessToken) {

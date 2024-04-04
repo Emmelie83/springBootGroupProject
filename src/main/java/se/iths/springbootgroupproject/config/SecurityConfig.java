@@ -24,7 +24,7 @@ public class SecurityConfig {
 
                         .anyRequest().authenticated()
                 )
-                .oauth2Login(Customizer.withDefaults());
+                .oauth2Login(oath2-> oath2.defaultSuccessUrl("/web/messages", true));
         return http.build();
     }
 
