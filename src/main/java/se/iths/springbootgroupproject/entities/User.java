@@ -29,7 +29,7 @@ public class User {
     private String lastName;
 
     @Setter
-    @Column("email")
+    @jakarta.persistence.Column(unique = true, name = "email")
     private String email;
 
 }
