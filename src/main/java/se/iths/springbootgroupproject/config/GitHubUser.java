@@ -1,7 +1,9 @@
 package se.iths.springbootgroupproject.config;
 
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
 public class GitHubUser {
     private String login;
@@ -11,27 +13,4 @@ public class GitHubUser {
     private String avatarUrl;
     private String email;
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

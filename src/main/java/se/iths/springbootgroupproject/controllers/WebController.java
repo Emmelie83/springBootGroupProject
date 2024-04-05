@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import se.iths.springbootgroupproject.CreateMessageFormData;
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.services.MessageService;
+import se.iths.springbootgroupproject.services.UserService;
 
 import java.time.LocalDate;
 
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @RequestMapping("/web")
 public class WebController {
     MessageService messageService;
+    UserService userService;
 
     public WebController(MessageService messageService) {
         this.messageService = messageService;
@@ -23,8 +25,9 @@ public class WebController {
     @GetMapping("messages")
     public String getMessages(Model model) {
         var messages = messageService.findAllBy();
+        var loggedInUser = userService.findById(1L).get();
         model.addAttribute("messages", messages);
-
+        model.addAttribute("loggedInUser", loggedInUser);
         return "messages";
     }
 

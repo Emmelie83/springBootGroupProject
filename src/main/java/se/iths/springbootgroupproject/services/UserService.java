@@ -1,7 +1,12 @@
 package se.iths.springbootgroupproject.services;
 
 import org.springframework.stereotype.Service;
+import se.iths.springbootgroupproject.entities.Message;
+import se.iths.springbootgroupproject.entities.User;
 import se.iths.springbootgroupproject.repos.UserRepository;
+
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -9,5 +14,16 @@ public class UserService {
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+
+    public User saveUser(User user) {
+
+        userRepository.save(user);
+        return user;
     }
 }
