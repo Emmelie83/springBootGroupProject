@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.logging.Logger;
 @Component
 public class StartupRunner implements ApplicationRunner {
-    private User user;
 
     private static final Logger LOG
             = Logger.getLogger(ApplicationRunner.class.getName());
@@ -37,6 +36,7 @@ public class StartupRunner implements ApplicationRunner {
             var message = new Message();
             message.setMessageTitle("Öl är gott");
             message.setMessageBody("Utan öl i tio dagar försmäktar jag i detta öde land.");
+            User user;
             if (userRepository.findByUserName("Eini").isEmpty()) {
                 user = new User();
                 user.setUserName("Eini");
