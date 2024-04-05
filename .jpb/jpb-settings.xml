@@ -6,6 +6,7 @@
     <exclude-change idName="message#user" tagName="dropColumn" />
     <exclude-change idName="message#user" tagName="addColumn" />
   </component>
+
   <component name="PersistenceUnitSettings">
     <persistence-units>
       <persistence-unit name="Default" defaultSearchScope="Project">

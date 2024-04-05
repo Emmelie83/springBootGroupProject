@@ -36,7 +36,7 @@ public class StartupRunner implements ApplicationRunner {
             var message = new Message();
             message.setMessageTitle("Welcome to the circus");
             message.setMessageBody("Hello everybody");
-            message.setUser("Kungen");
+            message.setUser(new User());
             message.setDate(LocalDate.now());
             message.setPublic(true);
             message.setLastModified(LocalDate.now());

@@ -17,7 +17,7 @@ public class User {
     private Long id;
 
     @Setter
-    @Column("user_name")
+    @jakarta.persistence.Column(unique = true, name = "user_name")
     private String userName;
 
     @Setter
@@ -29,7 +29,7 @@ public class User {
     private String lastName;
 
     @Setter
-    @Column("email")
+    @jakarta.persistence.Column(unique = true, name = "email")
     private String email;
 
 }
