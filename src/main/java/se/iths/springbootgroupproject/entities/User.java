@@ -16,7 +16,7 @@ public class User {
     @Setter
     @Getter
     @jakarta.persistence.Column(unique = true, name = "git_id")
-    private String gitId;
+    private Integer gitId;
 
     @Setter
     @jakarta.persistence.Column(unique = true, name = "user_name")

@@ -24,8 +24,8 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public Optional<User> findByUserId(String userId) {
-        return userRepository.findByGitId(userId);
+    public Optional<User> findByUserId(Integer gitId) {
+        return userRepository.findByGitId(gitId);
 
     }
 }

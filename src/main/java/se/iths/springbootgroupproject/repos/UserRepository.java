@@ -13,5 +13,5 @@ public interface UserRepository extends ListCrudRepository<User, Long> {
     @EntityGraph(attributePaths = "allUsers")
     List<User> findAllBy();
 
-    Optional<User> findByGitId(String userId);
+    Optional<User> findByGitId(Integer gitId);
 }
