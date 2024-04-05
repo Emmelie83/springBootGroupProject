@@ -85,4 +85,19 @@ public class WebController {
 
         return "redirect:/web/messages";
     }
+
+    @GetMapping("/web/messages")
+    public String messagesPage(@RequestParam(name = "lang", defaultValue = "en") String lang, Model model) {
+        String logoutButtonText;
+        if ("en".equals(lang)) {
+            logoutButtonText = "Logout";
+        } else if ("sv".equals(lang)) {
+            logoutButtonText = "Logga ut";
+        } else {
+            logoutButtonText = "Logout";
+        }
+        model.addAttribute("logoutButtonText", logoutButtonText);
+
+        return "messages";
+    }
 }

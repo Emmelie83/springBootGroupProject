@@ -9,6 +9,7 @@
 <div>
     <a href="http://localhost:8080/web/messages?lang=en">English</a>
     <a href="http://localhost:8080/web/messages?lang=sv">Svenska</a>
+    <a th:href="@{'/logout?lang=' + ${lang}}" th:text="#{logout}">Logout</a>
 </div>
 <div class="content">
     <h1 th:text="#{messagelist}"></h1>

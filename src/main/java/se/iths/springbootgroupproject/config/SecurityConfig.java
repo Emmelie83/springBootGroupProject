@@ -2,7 +2,6 @@ package se.iths.springbootgroupproject.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
@@ -31,9 +30,8 @@ public class SecurityConfig {
 
                         .anyRequest().authenticated()
                 )
-                .oauth2Login(Customizer.withDefaults());
-        //http.csrf(AbstractHttpConfigurer::disable); // disable CSRF protection until we have proper user class??
-
+                .oauth2Login(oath2-> oath2.defaultSuccessUrl("/web/messages", true));
+        //http.csrf(AbstractHttpConfigurer::disable); // disable CSRF protection temporarily until we have proper user class?
         return http.build();
     }
 
