@@ -19,7 +19,7 @@ public class User {
     private String gitId;
 
     @Setter
-    @Column("user_name")
+    @jakarta.persistence.Column(unique = true, name = "user_name")
     private String userName;
 
     @Setter
@@ -27,7 +27,7 @@ public class User {
     private String fullName;
 
     @Setter
-    @Column("email")
+    @jakarta.persistence.Column(unique = true, name = "email")
     private String email;
 
     @Setter

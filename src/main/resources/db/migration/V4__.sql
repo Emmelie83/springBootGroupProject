@@ -1,0 +1,9 @@
+ALTER TABLE message
+DROP
+COLUMN user;
+
+ALTER TABLE message
+    ADD user BIGINT NULL;
+
+ALTER TABLE message
+    ADD CONSTRAINT FK_MESSAGE_ON_USER FOREIGN KEY (user) REFERENCES user (id);
