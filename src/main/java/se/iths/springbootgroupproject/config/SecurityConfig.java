@@ -7,6 +7,13 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.client.RestClient;
 
@@ -19,12 +26,12 @@ public class SecurityConfig {
     SecurityFilterChain web(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/login", "/oauth/**", "/logout", "/error**").permitAll()
-                        .requestMatchers("/web/create").hasRole("ADMIN")
+                        .requestMatchers("/", "/login", "/oauth/**", "/logout", "/error**", "/web/publicMessages").permitAll()
 
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oath2-> oath2.defaultSuccessUrl("/web/messages", true));
+        //http.csrf(AbstractHttpConfigurer::disable); // disable CSRF protection temporarily until we have proper user class?
         return http.build();
     }
 
