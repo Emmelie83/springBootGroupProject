@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DatabaseMigrationSettings" lastSelectedDirectory="src\main\resources\db\migration" />
+  <component name="JpaLiquibaseChangesConfig">
+    <exclude-change idName="FK_MESSAGE_ON_USER" tagName="dropForeignKeyConstraint" />
+    <exclude-change idName="message#user" tagName="dropColumn" />
+    <exclude-change idName="message#user" tagName="addColumn" />
+  </component>
   <component name="PersistenceUnitSettings">
     <persistence-units>
       <persistence-unit name="Default" defaultSearchScope="Project">

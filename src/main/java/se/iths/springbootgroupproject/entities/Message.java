@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.relational.core.mapping.Column;
 
@@ -39,5 +40,8 @@ public class Message {
     @Column("is_public")
     private boolean isPublic = false;
 
+    @Setter
+    @LastModifiedDate
+    private LocalDate lastModified;
 
 }
