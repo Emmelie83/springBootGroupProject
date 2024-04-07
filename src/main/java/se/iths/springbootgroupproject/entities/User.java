@@ -5,9 +5,6 @@ import lombok.Setter;
 import lombok.Getter;
 import org.springframework.data.relational.core.mapping.Column;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Getter
 public class User {
@@ -17,19 +14,24 @@ public class User {
     private Long id;
 
     @Setter
-    @Column("user_name")
+    @Getter
+    @jakarta.persistence.Column(unique = true, name = "git_id")
+    private Integer gitId;
+
+    @Setter
+    @jakarta.persistence.Column(unique = true, name = "user_name")
     private String userName;
 
     @Setter
-    @Column("first_name")
-    private String firstName;
+    @Column("full_name")
+    private String fullName;
 
     @Setter
-    @Column("last_name")
-    private String lastName;
-
-    @Setter
-    @Column("email")
+    @jakarta.persistence.Column(unique = true, name = "email")
     private String email;
+
+    @Setter
+    @Column("avatar_url")
+    private String avatarUrl;
 
 }
