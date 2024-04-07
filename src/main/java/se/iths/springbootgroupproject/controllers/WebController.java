@@ -28,13 +28,13 @@ public class WebController {
         return "messages";
     }
 
-    @GetMapping("publicMessages")
-    public String getPublicMessages(Model model) {
-        var messages = messageService.findAllByPrivateMessageIsFalse();
-        model.addAttribute("messages", messages);
-
-        return "messages";
-    }
+//    @GetMapping("publicMessages")
+//    public String getPublicMessages(Model model) {
+//        var messages = messageService.findAllByPrivateMessageIsFalse();
+//        model.addAttribute("messages", messages);
+//
+//        return "messages";
+//    }
 
     @GetMapping("create")
     public String postMessage(Model model) {
