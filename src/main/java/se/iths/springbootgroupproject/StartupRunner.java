@@ -39,7 +39,7 @@ public class StartupRunner implements ApplicationRunner {
             saveMessage("Eini", "Eini Enhörning", "eini@eteam.com", createMessage("Öl är gott", "Utan öl i tio dagar försmäktar jag i detta öde land."), true);
             saveMessage("Harry", "Harry Hare", "harry@eteam.com", createMessage("Drinking beer in the sun", "Spring is here and we are drinking beer in the sun."), true);
             saveMessage("Säli", "Säli Bukowski", "säli@eteam.com", createMessage("Svensk öl", "Här i Sverige måste vi gå till Systembolaget om vi vill dricka öl. Eller så dricker vi jättedyr öl på krogen."), true);
-            saveMessage("Honey Bear", "Bear Brinkel", "bear@eteam.com", createMessage("I don't like beer", "Why are you all writing about beer? I don't even like beer. I want to drink tee with honey."), true);
+            saveMessage("Honey Bear", "Bear Brinkel", "bear@eteam.com", createMessage("I don't like beer", "Why are you all writing about beer? I don't even like beer. I want to drink tea with honey."), true);
             saveMessage("Esi", "Esi Esel", "esi@eteam.com", createMessage("För liten för öl", "Jag är alldeles för liten för att dricka öl."), false);
             saveMessage("Eini", "Eini Enhörning", "eini@eteam.com", createMessage("Öl är livet", "Jag kommer att lära dig att dricka öl, Esi. Öl är livet!"), false);
         }
