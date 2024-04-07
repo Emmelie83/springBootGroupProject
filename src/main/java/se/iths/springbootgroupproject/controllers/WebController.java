@@ -1,6 +1,8 @@
 package se.iths.springbootgroupproject.controllers;
 
 import jakarta.validation.Valid;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +27,10 @@ public class WebController {
     @GetMapping("messages")
     public String getMessages(Model model) {
         var messages = messageService.findAllBy();
-        var loggedInUser = userService.findById(1L).get();
+        // Retrieve the logged-in user's details
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+        var loggedInUser = userService.findByUsername((username));
         model.addAttribute("messages", messages);
         model.addAttribute("loggedInUser", loggedInUser);
         return "messages";
