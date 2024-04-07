@@ -17,11 +17,6 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User saveUser (User user){
-        userRepository.save(user);
-        return user;
-    }
-
     public Optional<User> findById(Long id){
         return userRepository.findById(id);
     }
@@ -30,11 +25,6 @@ public class UserService {
         return userRepository.findByGitId(gitId);
 
     }
-
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
-    }
-
 
     public User saveUser(User user) {
 
