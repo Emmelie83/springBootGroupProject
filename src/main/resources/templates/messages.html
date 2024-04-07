@@ -29,7 +29,7 @@
             <td th:text="${message.user}">Jane Doe</td>
             <td th:text="${message.date}">2020-01-01</td>
             <td th:if="${message.user == loggedInUser}">
-                <a th:href="@{/web/update/{messageId}(messageId=${message.id})}">Update Message</a>
+                <a th:href="@{/web/update/{messageId}(messageId=${message.id})}" th:text="#{updatemessage}"></a>
             </td>
         </tr>
         </tbody>
