@@ -9,10 +9,19 @@ import se.iths.springbootgroupproject.services.MessageService;
 @Controller
 public class HomeController {
 
+    MessageService messageService;
+
+    public HomeController(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
 
-    @GetMapping("/home")
-    public String homePage(@RequestParam(name = "lang", defaultValue = "en") String lang) {
+    @GetMapping("home")
+    public String getPublicMessages(@RequestParam(name = "lang", defaultValue = "en") String lang, Model model) {
+        var messages = messageService.findAllByPrivateMessageIsFalse();
+        model.addAttribute("messages", messages);
+
         return "home";
     }
+
 }

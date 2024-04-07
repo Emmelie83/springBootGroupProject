@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
-    <title>Messages</title>
+    <title>Home</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
     </script>
     <script type="text/javascript">
@@ -25,14 +25,32 @@
         <option value="en">English</option>
         <option value="sv">Svenska</option>
     </select>
+    <a th:href="@{/web/messages}" th:text="#{login}" id="login_link">Login</a>
 </div>
-<div class="content" id="home">
-    <h1 th:text="#{greeting}">Welcome</h1>
-    <a th:href="@{/web/messages}" th:text="#{login}">Login</a>
-    <a th:text="#{guest}">Continue as Guest</a>
+<h1 th:text="#{greeting}" id="home">Welcome</h1>
+<div class="content">
+    <h2 th:text="#{messagelist}"></h2>
+    <table th:if="${not messages.isEmpty()}">
+        <thead>
+        <tr>
+            <th th:text="#{message.title}" ></th>
+            <th th:text="#{message.body}" class="message_body"></th>
+            <th th:text="#{message.user}"></th>
+            <th th:text="#{message.date}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="message : ${messages}">
+            <td th:text="${message.messageTitle}" >Title</td>
+            <td th:text="${message.messageBody}" class="message_body">Lorum ipsum</td>
+            <td th:text="${message.user.getUserName()}">Jane Doe</td>
+            <td th:text="${message.date}">2020-01-01</td>
+        </tr>
+        </tbody>
+    </table>
 
-
-</div>
+    <p th:unless="${not messages.isEmpty()}">No messages found.</p>
+</div>>
 
 </body>
 </html>

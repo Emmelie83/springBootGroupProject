@@ -1,24 +1,47 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <title>Update a message</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#locales").change(function () {
+                var selectedOption = $('#locales').val();
+                if (selectedOption != '') {
+                    window.location.replace('update?lang=' + selectedOption);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
-<h1>Message</h1>
-<form action="#" th:attr="action='/web/update/'+ ${messageId}" th:object="${formData}" method="post">
+<div class="menu">
+    <span th:text="#{lang.change}"></span>:
+    <select id="locales">
+        <option value=""></option>
+        <option value="en">English</option>
+        <option value="sv">Svenska</option>
+    </select>
+    <a id="logout_link" th:href="@{'/logout?lang=' + ${lang}}" th:text="#{logout}"></a>
+</div>
+<div class="content">
+    <h1 th:text="#{updatemessage}">Message</h1>
+    <form action="#" th:attr="action='/web/update/'+ ${messageId}" th:object="${formData}" method="post">
 
-    <input type="hidden" id="messageId" name="messageId" th:value="${messageId}"/>
-    <p><label for="messageTitle" th:text="#{message.title} + ':'"/>
-        <input id="messageTitle" type="text" th:field="*{messageTitle}" th:value="${originalMessage.messageTitle}"/>
-    <p th:if="${#fields.hasErrors('messageTitle')}"
-       th:text="${#strings.listJoin(#fields.errors('messageTitle'), ', ')}"></p>
-    <p><label for="messageBody" th:text="#{message.body} + ':'"/>
-        <textarea id="messageBody" th:field="*{messageBody}" cols="100" rows="6" th:value="${originalMessage.messageBody}"></textarea>
-    <p th:if="${#fields.hasErrors('messageBody')}"
-       th:text="${#strings.listJoin(#fields.errors('messageBody'), ', ')}"></p>
+        <input type="hidden" id="messageId" name="messageId" th:value="${messageId}"/>
+            <input id="messageTitle" type="text" th:field="*{messageTitle}" th:value="${originalMessage.messageTitle}"/>
+        <p th:if="${#fields.hasErrors('messageTitle')}"
+           th:text="${#strings.listJoin(#fields.errors('messageTitle'), ', ')}"></p>
+        <br><br>
+            <textarea id="messageBody" th:field="*{messageBody}" cols="100" rows="6"
+                      th:value="${originalMessage.messageBody}"></textarea>
+        <p th:if="${#fields.hasErrors('messageBody')}"
+           th:text="${#strings.listJoin(#fields.errors('messageBody'), ', ')}"></p>
 
-    <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
-</form>
+        <p><input type="submit" th:value="#{update}"/> <input type="reset" th:value="#{reset}"/></p>
+    </form>
+</div>
 </body>
 </html>
