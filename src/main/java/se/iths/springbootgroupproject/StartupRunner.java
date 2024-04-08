@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 import se.iths.springbootgroupproject.repos.UserRepository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 @Component
 public class StartupRunner implements ApplicationRunner {
@@ -63,7 +61,7 @@ public class StartupRunner implements ApplicationRunner {
                 });
 
         message.setUser(user);
-        message.setDate(LocalDate.now());
+        //message.setCreatedDate(LocalDate.now());
         message.setPublic(isPublic);
 
         messageRepository.save(message);

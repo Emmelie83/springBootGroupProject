@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.relational.core.mapping.Column;
-
 
 import java.time.LocalDate;
 
@@ -21,7 +21,11 @@ public class Message {
 
     @Setter
     @CreatedDate
-    private LocalDate date;
+    private LocalDate createdDate;
+
+    @Setter
+    @LastModifiedDate
+    private LocalDate lastModifiedDate;
 
     @Setter
     @Column("title")

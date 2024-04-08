@@ -1,5 +1,10 @@
+body {
+    padding: 3em;
+    font-family: "Calibri Light";
+}
+
 .content {
-    width: 80%;
+    width: 90%;
     margin: auto;
     padding-top: 2em;
 }
@@ -19,7 +24,7 @@ th, td {
 }
 
 .message_body {
-    width: 50%;
+    width: 40%;
 }
 
 th {
@@ -27,11 +32,6 @@ th {
     text-align: left;
     background-color: #04AA6D;
 
-}
-
-body {
-    padding: 3em;
-    font-family: "Calibri Light";
 }
 
 .post {
