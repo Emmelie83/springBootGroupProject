@@ -50,7 +50,7 @@
 
             <td th:text="${message.user.getUserName()}">Jane Doe</td>
             <td th:text="${message.date}">2020-01-01</td>
-            <td th:if="${message.user.getId() == loggedInUser.getId()}">
+            <td th:if="${loggedInUser != null and message.user.getId() == loggedInUser.getId()}">
                 <a th:href="@{/web/update/{messageId}(messageId=${message.id})}" th:text="#{updatemessage}"></a>
             </td>
         </tr>
