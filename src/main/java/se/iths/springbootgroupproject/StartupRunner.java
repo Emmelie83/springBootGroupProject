@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.logging.Logger;
 @Component
 public class StartupRunner implements ApplicationRunner {
-    private User user;
 
     private static final Logger LOG
             = Logger.getLogger(ApplicationRunner.class.getName());
@@ -42,6 +41,7 @@ public class StartupRunner implements ApplicationRunner {
             saveMessage("Honey Bear", "Bear Brinkel", "bear@eteam.com", createMessage("I don't like beer", "Why are you all writing about beer? I don't even like beer. I want to drink tea with honey."), true);
             saveMessage("Esi", "Esi Esel", "esi@eteam.com", createMessage("För liten för öl", "Jag är alldeles för liten för att dricka öl."), false);
             saveMessage("Eini", "Eini Enhörning", "eini@eteam.com", createMessage("Öl är livet", "Jag kommer att lära dig att dricka öl, Esi. Öl är livet!"), false);
+            
         }
     }
 
