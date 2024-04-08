@@ -33,4 +33,7 @@ public class User {
     @Column("avatar_url")
     private String avatarUrl;
 
+    @Setter
+    @Column("role")
+    private String role;
 }
