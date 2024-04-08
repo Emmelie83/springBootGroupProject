@@ -1,13 +1,16 @@
 package se.iths.springbootgroupproject.controllers;
 
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import se.iths.springbootgroupproject.CreateMessageFormData;
+import se.iths.springbootgroupproject.config.GithubOAuth2UserService;
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.services.MessageService;
 import se.iths.springbootgroupproject.services.UserService;
@@ -20,17 +23,16 @@ public class WebController {
     MessageService messageService;
     UserService userService;
 
-    public WebController(MessageService messageService) {
+    public WebController(MessageService messageService, UserService userService) {
         this.messageService = messageService;
+        this.userService = userService;
     }
 
     @GetMapping("messages")
-    public String getMessages(Model model) {
+    public String getMessages(Model model, @AuthenticationPrincipal OAuth2User oauth2User) {
         var messages = messageService.findAllBy();
-        // Retrieve the logged-in user's details
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = userDetails.getUsername();
-        var loggedInUser = userService.findByUsername((username));
+        Integer githubId = oauth2User.getAttribute("id");
+        var loggedInUser = userService.findByUserId(githubId);
         model.addAttribute("messages", messages);
         model.addAttribute("loggedInUser", loggedInUser);
         return "messages";
@@ -46,21 +48,26 @@ public class WebController {
 
     @GetMapping("create")
     public String postMessage(Model model) {
+
         CreateMessageFormData formData = new CreateMessageFormData();
+
         model.addAttribute("formData", formData);
+
         return "create";
     }
 
-
     @PostMapping("create")
-
     public String greetingSubmit(@Valid @ModelAttribute("formData") CreateMessageFormData message,
                                  BindingResult bindingResult,
-                                 Model model) {
+                                 Model model, @AuthenticationPrincipal OAuth2User oauth2User) {
         if (bindingResult.hasErrors()) {
+            System.out.println("ERROR ERROR ERROR ERROR ERROR ERROR ");
             return "create";
         }
-        messageService.saveMessage(message.toEntity());
+        Integer githubId = (Integer) oauth2User.getAttribute("id");
+        var loggedInUser = userService.findByUserId(githubId);
+        messageService.saveMessage(message.toEntity(loggedInUser.orElse(null)));
+
         return "redirect:/web/messages";
     }
 
@@ -82,7 +89,6 @@ public class WebController {
         if (bindingResult.hasErrors()) {
             return "update";
         }
-
 
         Message originalMessage = messageService.findById(messageId).get();
         originalMessage.setMessageTitle(message.getMessageTitle());
