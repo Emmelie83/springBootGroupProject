@@ -26,7 +26,7 @@
         <tr th:each="message : ${messages}">
             <td th:text="${message.messageTitle}">Title</td>
             <td th:text="${message.messageBody}">Lorum ipsum</td>
-            <td th:text="${message.user}">Jane Doe</td>
+            <td th:text="${message.user.getUserName()}">Jane Doe</td>
             <td th:text="${message.date}">2020-01-01</td>
             <td>
                 <a th:href="@{/web/update/{messageId}(messageId=${message.id})}">Update Message</a>
