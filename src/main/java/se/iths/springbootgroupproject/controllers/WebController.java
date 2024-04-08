@@ -65,7 +65,9 @@ public class WebController {
             return "create";
         }
         Integer githubId = (Integer) oauth2User.getAttribute("id");
+        //System.out.println(githubId + "GITHUB ID");
         var loggedInUser = userService.findByUserId(githubId);
+        //System.out.println(loggedInUser.get().getUserName() + "Username");
         messageService.saveMessage(message.toEntity(loggedInUser.orElse(null)));
 
         return "redirect:/web/messages";
