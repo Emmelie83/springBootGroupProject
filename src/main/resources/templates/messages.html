@@ -48,6 +48,7 @@
         <tr th:each="message : ${messages}">
             <td th:text="${message.messageTitle}" >Title</td>
             <td th:text="${message.messageBody}" class="message_body">Lorum ipsum</td>
+
             <td th:text="${message.user.getUserName()}">Jane Doe</td>
             <td th:text="${message.date}">2020-01-01</td>
             <td>
