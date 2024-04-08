@@ -1,15 +1,16 @@
 .content {
     width: 80%;
     margin: auto;
-    padding-top: 4em;
+    padding-top: 2em;
 }
 
 .menu {
-   text-align: right;
+    text-align: right;
 }
 
 table, th, td {
-    border: 1px solid black;
+    table-layout: fixed;
+    border: 1px solid #ccc;
     border-collapse: collapse;
 }
 
@@ -17,9 +18,14 @@ th, td {
     padding: 10px;
 }
 
+.message_body {
+    width: 50%;
+}
+
 th {
+    color: white;
     text-align: left;
-    background-color: #D6EEEE;
+    background-color: #04AA6D;
 
 }
 
@@ -28,12 +34,43 @@ body {
     font-family: "Calibri Light";
 }
 
-.container {
+.post {
     text-align: center;
-    margin-top: 2em;
+    margin-top: 3em;
 }
 
-#logout_link {
+
+#logout_link,
+#login_link {
     margin-left: 1em;
+}
+
+#home {
+    text-align: center;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 12px 18px;
+    margin: 4px
+}
+
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+    background-color: #f2f2f2;
+    color: black;
+    border: 1px solid #ccc;
+    radius: 4px;
+}
+
+input[type=text], #messageBody {
+    width: 80%;
+    padding: 10px 15px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 

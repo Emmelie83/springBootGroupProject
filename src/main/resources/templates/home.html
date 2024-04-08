@@ -1,75 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Welcome</title>
-    <link th:href="@{/styles/main.css}" rel="stylesheet">
-    <style>
-
-        .container {
-            text-align: center;
-            margin-top: 20vh;
-        }
-
-        button {
-            padding: 10px 10px;
-            font-size: 16px;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-            font-family: Georgia, serif;
-        }
-
-        .github-button:hover,
-        .no-login-button:hover,
-        .translate-button:hover {
-            border-color: black;
-        }
-
-        .github-button,
-        .no-login-button,
-        .translate-button,
-        .language-button {
-            background-color: #ddd;
-            color: black;
-            font-family: Georgia, serif;
-        }
-
-        .language-menu {
-            display: none;
-            position: absolute;
-            top: calc(100% + 5px);
-            right: 10px;
-            background-color: #f5f5f5;
-            border-radius: 5px;
-            padding: 2px;
-            z-index: 1;
-            font-family: Georgia, serif;
-        }
-
-    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+    <title>Home</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#locales").change(function () {
+                var selectedOption = $('#locales').val();
+                if (selectedOption != '') {
+                    window.location.replace('home?lang=' + selectedOption);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
-<div>
-    <div id="language-menu" class="language-menu">
-        <p><button class="language-button" onclick="window.location.href='http://localhost:8080/web/users?lang=en'">English</button></p>
-        <p><button class="language-button" onclick="window.location.href='http://localhost:8080/web/users?lang=sv'">Svenska</button></p>
-    </div>
-    <button class="translate-button" onclick="toggleLanguageMenu()">Translate</button>
+<div class="menu">
+    <span th:text="#{lang.change}"></span>:
+    <select id="locales">
+        <option value="en"></option>
+        <option value="en">English</option>
+        <option value="sv">Svenska</option>
+    </select>
+    <a th:href="@{/web/messages}" th:text="#{login}" id="login_link">Login</a>
 </div>
+<h1 th:text="#{greeting}" id="home">Welcome</h1>
+<div class="content">
+    <h2 th:text="#{messagelist}"></h2>
+    <table th:if="${not messages.isEmpty()}">
+        <thead>
+        <tr>
+            <th th:text="#{message.title}" ></th>
+            <th th:text="#{message.body}" class="message_body"></th>
+            <th th:text="#{message.user}"></th>
+            <th th:text="#{message.date}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="message : ${messages}">
+            <td th:text="${message.messageTitle}" >Title</td>
+            <td th:text="${message.messageBody}" class="message_body">Lorum ipsum</td>
+            <td th:text="${message.user.getUserName()}">Jane Doe</td>
+            <td th:text="${message.date}">2020-01-01</td>
+        </tr>
+        </tbody>
+    </table>
 
-<div class="container">
-    <h2>Welcome</h2>
-    <form id="home">
-        <div class="github-signin">
-            <button class="github-button" onclick="window.location.href='#'">Sign in with GitHub</button>
-        </div>
-        <div class="no-login">
-            <button type="button" class="no-login-button" onclick="window.location='guest-page';">Continue without signing in</button>
-        </div>
-    </form>
-</div>
+    <p th:unless="${not messages.isEmpty()}">No messages found.</p>
+</div>>
 
 </body>
 </html>
