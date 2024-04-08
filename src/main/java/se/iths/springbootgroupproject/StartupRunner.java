@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.logging.Logger;
 @Component
 public class StartupRunner implements ApplicationRunner {
+    private User user;
 
     private static final Logger LOG
             = Logger.getLogger(ApplicationRunner.class.getName());
@@ -34,9 +35,18 @@ public class StartupRunner implements ApplicationRunner {
         if (result.isEmpty()) {
             LOG.info("Messages not found. Creating Messages");
             var message = new Message();
-            message.setMessageTitle("Welcome to the circus");
-            message.setMessageBody("Hello everybody");
-            //message.setUser(new User());
+            message.setMessageTitle("Öl är gott");
+            message.setMessageBody("Utan öl i tio dagar försmäktar jag i detta öde land.");
+            if (userRepository.findByUserName("Eini").isEmpty()) {
+                user = new User();
+                user.setUserName("Eini");
+                user.setFullName("Eini Enhörning");
+                user.setEmail("eini@eteam.se");
+                userRepository.save(user);
+            } else {
+                user = userRepository.findByUserName("Eini").get();
+            }
+            message.setUser(user);
             message.setDate(LocalDate.now());
             message.setPublic(true);
             messageRepository.save(message);
