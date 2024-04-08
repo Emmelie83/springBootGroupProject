@@ -4,13 +4,15 @@
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <title>Update a message</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#locales").change(function () {
                 var selectedOption = $('#locales').val();
+                var messageId = $('#messageId').val(); // Retrieve message ID from hidden input
                 if (selectedOption != '') {
-                    window.location.replace('update?lang=' + selectedOption);
+                    window.location.replace('/web/update/' + messageId + '?lang=' + selectedOption);
                 }
             });
         });
@@ -28,7 +30,7 @@
 </div>
 <div class="content">
     <h1 th:text="#{updatemessage}">Message</h1>
-    <form action="#" th:attr="action='/web/update/'+ ${messageId}" th:object="${formData}" method="post">
+    <form action="#" th:attr="action='/web/update/'+ ${messageId}" th:object="${formData}" method="POST">
 
         <input type="hidden" id="messageId" name="messageId" th:value="${messageId}"/>
             <input id="messageTitle" type="text" th:field="*{messageTitle}" th:value="${originalMessage.messageTitle}"/>
