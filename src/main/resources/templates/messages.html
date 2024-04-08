@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <title>Messages</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#locales").change(function () {
+                var selectedOption = $('#locales').val();
+                if (selectedOption != '') {
+                    window.location.replace('messages?lang=' + selectedOption);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
-<div>
-    <a href="http://localhost:8080/web/messages?lang=en">English</a>
-    <a href="http://localhost:8080/web/messages?lang=sv">Svenska</a>
-    <a th:href="@{'/logout?lang=' + ${lang}}" th:text="#{logout}">Logout</a>
+<div class="menu">
+    <span th:text="#{lang.change}"></span>:
+    <select id="locales">
+        <option value=""></option>
+        <option value="en">English</option>
+        <option value="sv">Svenska</option>
+    </select>
+    <a id="logout_link" th:href="@{'/logout?lang=' + ${lang}}" th:text="#{logout}"></a>
+
 </div>
 <div class="content">
     <h1 th:text="#{messagelist}"></h1>
@@ -20,6 +37,7 @@
             <th th:text="#{message.body}"></th>
             <th th:text="#{message.user}"></th>
             <th th:text="#{message.date}"></th>
+            <th th:text="#{message.update}"></th>
         </tr>
         </thead>
         <tbody>
@@ -29,7 +47,7 @@
             <td th:text="${message.user.getUserName()}">Jane Doe</td>
             <td th:text="${message.date}">2020-01-01</td>
             <td>
-                <a th:href="@{/web/update/{messageId}(messageId=${message.id})}">Update Message</a>
+                <a th:href="@{/web/update/{messageId}(messageId=${message.id})}" th:text="#{updatemessage}"></a>
             </td>
         </tr>
         </tbody>
@@ -37,7 +55,9 @@
 
     <p th:unless="${not messages.isEmpty()}">No messages found.</p>
 </div>
-<a href="/web/create" th:text="#{postmessage}"></a>
+<div class="container">
+    <a href="/web/create" th:text="#{postmessage}"></a>
+</div>
 <!--<a href="/web/update" th:text="#{updatemessage}"></a>-->
 </body>
 </html>

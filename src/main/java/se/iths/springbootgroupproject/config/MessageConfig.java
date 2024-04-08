@@ -1,4 +1,4 @@
-package se.iths.springbootgroupproject;
+package se.iths.springbootgroupproject.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

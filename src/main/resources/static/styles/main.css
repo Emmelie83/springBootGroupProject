@@ -1,7 +1,11 @@
 .content {
-    width: 70%;
+    width: 80%;
     margin: auto;
     padding-top: 4em;
+}
+
+.menu {
+   text-align: right;
 }
 
 table, th, td {
@@ -18,3 +22,18 @@ th {
     background-color: #D6EEEE;
 
 }
+
+body {
+    padding: 3em;
+    font-family: "Calibri Light";
+}
+
+.container {
+    text-align: center;
+    margin-top: 2em;
+}
+
+#logout_link {
+    margin-left: 1em;
+}
+
