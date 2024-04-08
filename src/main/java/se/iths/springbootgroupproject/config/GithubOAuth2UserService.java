@@ -38,8 +38,11 @@ public class GithubOAuth2UserService extends DefaultOAuth2UserService {
             user.setFullName((String) attributes.get("name"));
             user.setEmail((String) attributes.get("email"));
             user.setGitId((Integer) attributes.get("id"));
+            user.setRole("ROLE_USER");
             userRepository.save(user);
+
         }
         return oauth2User;
     }
+
 }
