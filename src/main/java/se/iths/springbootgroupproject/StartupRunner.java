@@ -61,7 +61,6 @@ public class StartupRunner implements ApplicationRunner {
                 });
 
         message.setUser(user);
-        //message.setCreatedDate(LocalDate.now());
         message.setPublic(isPublic);
 
         messageRepository.save(message);

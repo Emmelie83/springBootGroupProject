@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.relational.core.mapping.Column;
@@ -28,6 +29,10 @@ public class Message {
     private LocalDate lastModifiedDate;
 
     @Setter
+    @LastModifiedBy
+    private String lastModifiedBy;
+
+    @Setter
     @Column("title")
     private String messageTitle;
 
@@ -36,7 +41,7 @@ public class Message {
     private String messageBody;
 
     @Setter
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "user")
     private User user;
 

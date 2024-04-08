@@ -3,9 +3,11 @@ package se.iths.springbootgroupproject.entities;
 import jakarta.persistence.*;
 import lombok.Setter;
 import lombok.Getter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.relational.core.mapping.Column;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 public class User {
 
