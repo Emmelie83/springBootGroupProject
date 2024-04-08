@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <style>
+        .profile-container {
+            margin: 50px auto;
+            width: 50%;
+            text-align: center;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+        }
+        .profile-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .profile-form input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="profile-container">
+    <h1>User Profile</h1>
+    <img class="profile-img" th:src="${user.avatarUrl}" alt="Profile Picture">
+    <form class="profile-form" method="post" action="/user/update">
+        <input type="text" name="userName" th:value="${user.userName}" placeholder="Username">
+        <input type="text" name="email" th:value="${user.email}" placeholder="Email">
+        <input type="file" name="profilePicture" accept="image/*">
+        <input type="submit" value="Save Changes">
+    </form>
+</div>
+</body>
+</html>
