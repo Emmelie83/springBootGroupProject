@@ -14,7 +14,6 @@ public class User {
     private Long id;
 
     @Setter
-    @Getter
     @jakarta.persistence.Column(unique = true, name = "git_id")
     private Integer gitId;
 
