@@ -31,10 +31,10 @@ public class WebController {
     @GetMapping("messages")
     public String getMessages(Model model, @AuthenticationPrincipal OAuth2User oauth2User) {
         var messages = messageService.findAllBy();
-        Integer githubId = oauth2User.getAttribute("id");
+        Integer githubId = (Integer) oauth2User.getAttribute("id");
         var loggedInUser = userService.findByUserId(githubId);
         model.addAttribute("messages", messages);
-        model.addAttribute("loggedInUser", loggedInUser);
+        loggedInUser.ifPresent(user -> model.addAttribute("loggedInUser", user));
         return "messages";
     }
 
@@ -61,13 +61,11 @@ public class WebController {
                                  BindingResult bindingResult,
                                  Model model, @AuthenticationPrincipal OAuth2User oauth2User) {
         if (bindingResult.hasErrors()) {
-            System.out.println("ERROR ERROR ERROR ERROR ERROR ERROR ");
             return "create";
         }
         Integer githubId = (Integer) oauth2User.getAttribute("id");
-        //System.out.println(githubId + "GITHUB ID");
         var loggedInUser = userService.findByUserId(githubId);
-        //System.out.println(loggedInUser.get().getUserName() + "Username");
+
         messageService.saveMessage(message.toEntity(loggedInUser.orElse(null)));
 
         return "redirect:/web/messages";
