@@ -21,9 +21,11 @@ import java.util.Optional;
 public class GithubOAuth2UserService extends DefaultOAuth2UserService {
 
     UserRepository userRepository;
+    GitHubService gitHubService;
 
-    public GithubOAuth2UserService(UserRepository userRepository) {
+    public GithubOAuth2UserService(UserRepository userRepository,  GitHubService gitHubService) {
         this.userRepository = userRepository;
+        this.gitHubService = gitHubService;
     }
 
     @Override
@@ -32,13 +34,24 @@ public class GithubOAuth2UserService extends DefaultOAuth2UserService {
         Map<String, Object> attributes = oauth2User.getAttributes();
         Optional<User> authenticatedUser = userRepository.findByGitId((Integer) attributes.get("id"));
         if (authenticatedUser.isEmpty()) {
+            OAuth2AccessToken accessToken = userRequest.getAccessToken();
             User user = new User();
             user.setUserName((String) attributes.get("login"));
             user.setAvatarUrl((String) attributes.get("avatar_url"));
             user.setFullName((String) attributes.get("name"));
+
             user.setEmail((String) attributes.get("email"));
             user.setGitId((Integer) attributes.get("id"));
             user.setRole("ROLE_USER");
+            List<Email> result = gitHubService.getEmails(accessToken);
+            for (Email email : result) {
+                if (email.primary()) {
+                    String gitHubEmail = email.email();
+                    System.out.println("Primary Email Address: " + gitHubEmail);
+                    user.setEmail(gitHubEmail);
+                    break;
+                }
+            }
             userRepository.save(user);
 
         }
