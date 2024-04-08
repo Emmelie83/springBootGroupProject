@@ -26,23 +26,28 @@
         <option value="sv">Svenska</option>
     </select>
     <a id="logout_link" th:href="@{'/logout?lang=' + ${lang}}" th:text="#{logout}"></a>
+</div>
 
+<h1 th:text="#{greeting}" id="home">Welcome</h1>
+<div class="post">
+    <a href="/web/create" th:text="#{postmessage}"></a>
 </div>
 <div class="content">
-    <h1 th:text="#{messagelist}"></h1>
+    <h2 th:text="#{messagelist}"></h2>
     <table th:if="${not messages.isEmpty()}">
         <thead>
         <tr>
-            <th th:text="#{message.title}"></th>
-            <th th:text="#{message.body}"></th>
+            <th th:text="#{message.title}" ></th>
+            <th th:text="#{message.body}" class="message_body"></th>
             <th th:text="#{message.user}"></th>
             <th th:text="#{message.date}"></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="message : ${messages}">
-            <td th:text="${message.messageTitle}">Title</td>
-            <td th:text="${message.messageBody}">Lorum ipsum</td>
+            <td th:text="${message.messageTitle}" >Title</td>
+            <td th:text="${message.messageBody}" class="message_body">Lorum ipsum</td>
+
             <td th:text="${message.user.getUserName()}">Jane Doe</td>
             <td th:text="${message.date}">2020-01-01</td>
             <td th:if="${message.user == loggedInUser}">
@@ -53,9 +58,6 @@
     </table>
 
     <p th:unless="${not messages.isEmpty()}">No messages found.</p>
-</div>
-<div class="container">
-    <a href="/web/create" th:text="#{postmessage}"></a>
 </div>
 <!--<a href="/web/update" th:text="#{updatemessage}"></a>-->
 </body>
