@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import se.iths.springbootgroupproject.repos.UserRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 @Component
 public class StartupRunner implements ApplicationRunner {
@@ -30,26 +32,40 @@ public class StartupRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         LOG.info("Checking for Message");
 
-        var result = messageRepository.findAllBy();
-        if (result.isEmpty()) {
+        if (messageRepository.findAllBy().isEmpty()) {
             LOG.info("Messages not found. Creating Messages");
-            var message = new Message();
-            message.setMessageTitle("Öl är gott");
-            message.setMessageBody("Utan öl i tio dagar försmäktar jag i detta öde land.");
-            User user;
-            if (userRepository.findByUserName("Eini").isEmpty()) {
-                user = new User();
-                user.setUserName("Eini");
-                user.setFullName("Eini Enhörning");
-                user.setEmail("eini@eteam.se");
-                userRepository.save(user);
-            } else {
-                user = userRepository.findByUserName("Eini").get();
-            }
-            message.setUser(user);
-            message.setDate(LocalDate.now());
-            message.setPublic(true);
-            messageRepository.save(message);
+
+            saveMessage("Eini", "Eini Enhörning", "eini@eteam.com", createMessage("Öl är gott", "Utan öl i tio dagar försmäktar jag i detta öde land."), true);
+            saveMessage("Harry", "Harry Hare", "harry@eteam.com", createMessage("Drinking beer in the sun", "Spring is here and we are drinking beer in the sun."), true);
+            saveMessage("Säli", "Säli Bukowski", "säli@eteam.com", createMessage("Svensk öl", "Här i Sverige måste vi gå till Systembolaget om vi vill dricka öl. Eller så dricker vi jättedyr öl på krogen."), true);
+            saveMessage("Honey Bear", "Bear Brinkel", "bear@eteam.com", createMessage("I don't like beer", "Why are you all writing about beer? I don't even like beer. I want to drink tea with honey."), true);
+            saveMessage("Esi", "Esi Esel", "esi@eteam.com", createMessage("För liten för öl", "Jag är alldeles för liten för att dricka öl."), false);
+            saveMessage("Eini", "Eini Enhörning", "eini@eteam.com", createMessage("Öl är livet", "Jag kommer att lära dig att dricka öl, Esi. Öl är livet!"), false);
+            
         }
+    }
+
+    public Message createMessage(String title, String body) {
+        Message message = new Message();
+        message.setMessageTitle(title);
+        message.setMessageBody(body);
+        return message;
+    }
+
+    public void saveMessage(String userName, String fullName, String email, Message message, boolean isPublic) {
+        User user = userRepository.findByUserName(userName)
+                .orElseGet(() -> {
+                    User newUser = new User();
+                    newUser.setUserName(userName);
+                    newUser.setFullName(fullName);
+                    newUser.setEmail(email);
+                    return userRepository.save(newUser);
+                });
+
+        message.setUser(user);
+        message.setDate(LocalDate.now());
+        message.setPublic(isPublic);
+
+        messageRepository.save(message);
     }
 }
