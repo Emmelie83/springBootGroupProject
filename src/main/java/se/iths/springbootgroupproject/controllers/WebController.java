@@ -15,6 +15,7 @@ import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.services.MessageService;
 import se.iths.springbootgroupproject.services.UserService;
 
+import java.security.Principal;
 import java.time.LocalDate;
 
 @Controller
@@ -29,12 +30,14 @@ public class WebController {
     }
 
     @GetMapping("messages")
-    public String getMessages(Model model, @AuthenticationPrincipal OAuth2User oauth2User) {
+    public String getMessages(Model model, Principal principal, @AuthenticationPrincipal OAuth2User oauth2User) {
         var messages = messageService.findAllBy();
+        boolean isLoggedIn = principal != null;
         Integer githubId = (Integer) oauth2User.getAttribute("id");
         var loggedInUser = userService.findByUserId(githubId);
         model.addAttribute("messages", messages);
         loggedInUser.ifPresent(user -> model.addAttribute("loggedInUser", user));
+        model.addAttribute("isLoggedIn", isLoggedIn);
         return "messages";
     }
 
