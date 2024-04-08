@@ -84,7 +84,7 @@ public class WebController {
 
     @PostMapping("update/{messageId}")
     public String greetingSubmit(@PathVariable Long messageId, @Valid @ModelAttribute("formData") CreateMessageFormData message,
-                                BindingResult bindingResult,
+                                BindingResult bindingResult,  @AuthenticationPrincipal OAuth2User oauth2User,
                                 Model model) {
         if (bindingResult.hasErrors()) {
             return "update";

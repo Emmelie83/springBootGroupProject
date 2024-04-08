@@ -35,12 +35,12 @@ public class StartupRunner implements ApplicationRunner {
         if (messageRepository.findAllBy().isEmpty()) {
             LOG.info("Messages not found. Creating Messages");
 
-            saveMessage("Eini", "Eini Enhörning", "eini@eteam.com", createMessage("Öl är gott", "Utan öl i tio dagar försmäktar jag i detta öde land."), true);
-            saveMessage("Harry", "Harry Hare", "harry@eteam.com", createMessage("Drinking beer in the sun", "Spring is here and we are drinking beer in the sun."), true);
-            saveMessage("Säli", "Säli Bukowski", "säli@eteam.com", createMessage("Svensk öl", "Här i Sverige måste vi gå till Systembolaget om vi vill dricka öl. Eller så dricker vi jättedyr öl på krogen."), true);
-            saveMessage("Honey Bear", "Bear Brinkel", "bear@eteam.com", createMessage("I don't like beer", "Why are you all writing about beer? I don't even like beer. I want to drink tea with honey."), true);
-            saveMessage("Esi", "Esi Esel", "esi@eteam.com", createMessage("För liten för öl", "Jag är alldeles för liten för att dricka öl."), false);
-            saveMessage("Eini", "Eini Enhörning", "eini@eteam.com", createMessage("Öl är livet", "Jag kommer att lära dig att dricka öl, Esi. Öl är livet!"), false);
+            saveMessage("Eini", "Eini Enhörning", "eini@eteam.com","ROLE_USER", createMessage("Öl är gott", "Utan öl i tio dagar försmäktar jag i detta öde land."), true);
+            saveMessage("Harry", "Harry Hare", "harry@eteam.com","ROLE_GUEST", createMessage("Drinking beer in the sun", "Spring is here and we are drinking beer in the sun."), true);
+            saveMessage("Säli", "Säli Bukowski", "säli@eteam.com","ROLE_GUEST", createMessage("Svensk öl", "Här i Sverige måste vi gå till Systembolaget om vi vill dricka öl. Eller så dricker vi jättedyr öl på krogen."), true);
+            saveMessage("Honey Bear", "Bear Brinkel", "bear@eteam.com", "ROLE_GUEST", createMessage("I don't like beer", "Why are you all writing about beer? I don't even like beer. I want to drink tea with honey."), true);
+            saveMessage("Esi", "Esi Esel", "esi@eteam.com","ROLE_USER", createMessage("För liten för öl", "Jag är alldeles för liten för att dricka öl."), false);
+            saveMessage("Eini", "Eini Enhörning", "eini@eteam.com","ROLE_USER", createMessage("Öl är livet", "Jag kommer att lära dig att dricka öl, Esi. Öl är livet!"), false);
             
         }
     }
@@ -52,13 +52,14 @@ public class StartupRunner implements ApplicationRunner {
         return message;
     }
 
-    public void saveMessage(String userName, String fullName, String email, Message message, boolean isPublic) {
+    public void saveMessage(String userName, String fullName, String email, String role, Message message, boolean isPublic) {
         User user = userRepository.findByUserName(userName)
                 .orElseGet(() -> {
                     User newUser = new User();
                     newUser.setUserName(userName);
                     newUser.setFullName(fullName);
                     newUser.setEmail(email);
+                    newUser.setRole(role);
                     return userRepository.save(newUser);
                 });
 
