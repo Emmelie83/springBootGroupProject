@@ -26,11 +26,11 @@ public class SecurityConfig {
     SecurityFilterChain web(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/login", "/oauth/**", "/logout", "/error**", "/web/publicMessages", "/home").permitAll()
+                        .requestMatchers("/", "/login", "/oauth/**", "/logout", "/error**", "/web/messages", "/home").permitAll()
 
                         .anyRequest().authenticated()
-                )
-                .oauth2Login(oath2-> oath2.defaultSuccessUrl("/web/messages", true));
+                );
+                //.oauth2Login(oath2-> oath2.defaultSuccessUrl("/web/messages", true));
         //http.csrf(AbstractHttpConfigurer::disable); // disable CSRF protection temporarily until we have proper user class?
         return http.build();
     }
