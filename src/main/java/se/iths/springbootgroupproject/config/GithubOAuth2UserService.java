@@ -31,12 +31,13 @@ public class GithubOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2User oauth2User = super.loadUser(userRequest);
         Map<String, Object> attributes = oauth2User.getAttributes();
         Optional<User> authenticatedUser = userRepository.findByGitId((Integer) attributes.get("id"));
+
         if (authenticatedUser.isEmpty()) {
             User user = new User();
             user.setUserName((String) attributes.get("login"));
             user.setAvatarUrl((String) attributes.get("avatar_url"));
             user.setFullName((String) attributes.get("name"));
-            user.setEmail((String) attributes.get("email"));
+            user.setEmail(String.valueOf(attributes.get("email")));
             user.setGitId((Integer) attributes.get("id"));
             user.setRole("ROLE_USER");
             userRepository.save(user);
