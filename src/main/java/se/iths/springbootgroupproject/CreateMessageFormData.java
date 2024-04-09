@@ -24,19 +24,6 @@ public class CreateMessageFormData {
     @Size(min = 1, max = 2000)
     private String messageBody;
 
-
-//    public CreateMessageFormData() {
-//    }
-//
-//
-//    //this is for updating existing messages
-//
-//    public CreateMessageFormData(String messageTitle, String messageBody) {
-//        this.messageTitle = messageTitle;
-//        this.messageBody = messageBody;
-//
-//    }
-
     public Message toEntity(User user) {
         var message = new Message();
         message.setMessageTitle(messageTitle);
