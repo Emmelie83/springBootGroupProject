@@ -25,7 +25,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oath2 -> oath2.defaultSuccessUrl("/web/messages", true));
-        //http.csrf(AbstractHttpConfigurer::disable); // disable CSRF protection temporarily until we have proper user class?
+        //http.csrf(csrf -> csrf.disable()); // disable CSRF protection temporarily
         return http.build();
     }
 
