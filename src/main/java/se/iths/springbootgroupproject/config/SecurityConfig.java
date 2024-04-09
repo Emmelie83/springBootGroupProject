@@ -12,7 +12,6 @@ import org.springframework.web.client.RestClient;
 
 @Configuration
 @EnableRetry
-//@EnableMethodSecurity
 public class SecurityConfig {
 
 

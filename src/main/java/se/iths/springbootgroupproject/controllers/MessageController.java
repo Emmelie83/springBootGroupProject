@@ -33,7 +33,6 @@ public class MessageController {
         return messageService.saveMessage(message);
     }
     @PutMapping("/messages/{id}")
-//    @PreAuthorize("hasRole('ROLE_USER')")
     public Message updateMessage(@PathVariable Long id, @RequestBody Message message) {
 
         return messageService.updateMessage(id,message);
