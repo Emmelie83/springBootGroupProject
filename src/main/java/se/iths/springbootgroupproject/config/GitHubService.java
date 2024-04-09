@@ -22,7 +22,6 @@ public class GitHubService {
 
     @Retryable
     public List<Email> getEmails(OAuth2AccessToken accessToken) {
-        System.out.println("Getting emails from GitHub...");
         return restClient.get()
                 .uri("https://api.github.com/user/emails")
                 .headers(headers -> headers.setBearerAuth(accessToken.getTokenValue()))
