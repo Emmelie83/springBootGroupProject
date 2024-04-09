@@ -1,7 +1,9 @@
 package se.iths.springbootgroupproject.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -13,6 +15,8 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Message {
 
@@ -25,7 +29,6 @@ public class Message {
     private LocalDate createdDate;
 
     @Setter
-    @LastModifiedDate
     private LocalDate lastModifiedDate;
 
     @Setter

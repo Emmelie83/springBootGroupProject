@@ -10,6 +10,7 @@ import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.entities.PublicMessage;
 import se.iths.springbootgroupproject.repos.MessageRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ public class MessageService {
 
     //    @PreAuthorize("#updateMessage.user.getId() == authentication.principal.id")
     public Message updateMessage(Long id, Message updateMessage) {
-        Message existingMessage = messageRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Message not found with id: "+id));
+        Message existingMessage = messageRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Message not found with id: " + id));
         if (updateMessage.getCreatedDate() != null) {
             existingMessage.setCreatedDate(updateMessage.getCreatedDate());
         }
@@ -41,8 +42,10 @@ public class MessageService {
             existingMessage.setUser(updateMessage.getUser());
         }
 
+        existingMessage.setLastModifiedDate(LocalDate.now());
 
-            existingMessage.setPublic(updateMessage.isPublic());
+
+        existingMessage.setPublic(updateMessage.isPublic());
 
         return messageRepository.save(existingMessage);
     }
