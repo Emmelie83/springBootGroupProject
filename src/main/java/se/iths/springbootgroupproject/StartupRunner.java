@@ -47,6 +47,7 @@ public class StartupRunner implements ApplicationRunner {
         Message message = new Message();
         message.setMessageTitle(title);
         message.setMessageBody(body);
+        message.setLastModifiedDate(null);
         return message;
     }
 

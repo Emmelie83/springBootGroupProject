@@ -17,9 +17,5 @@ public class SpringBootGroupProjectApplication {
         SpringApplication.run(SpringBootGroupProjectApplication.class, args);
     }
 
-    @Bean
-    public SpringSecurityAuditorAware auditorAware(){
-        return new SpringSecurityAuditorAware();
-    }
 
 }

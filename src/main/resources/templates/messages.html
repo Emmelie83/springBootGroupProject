@@ -52,7 +52,7 @@
                 <td th:text="${message.user.userName}">Jane Doe</td>
                 <td th:text="${message.createdDate}">2020-01-01</td>
                 <td>
-                    <span th:if="${message.createdDate != message.lastModifiedDate}" th:text="${message.lastModifiedDate}
+                    <span th:text="${message.lastModifiedDate}
                        + ' ' + #{editedby} + ': ' + ${message.lastModifiedBy}"></span>
                     <p id="edit" th:if="${message.user?.id} == ${loggedInUser?.id}">
                         <a th:href="@{/web/update/{messageId}(messageId=${message.id})}" th:text="#{editmessage}"></a>
