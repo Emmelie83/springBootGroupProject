@@ -1,6 +1,8 @@
 package se.iths.springbootgroupproject.controllers;
 
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,11 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import se.iths.springbootgroupproject.CreateMessageFormData;
 import se.iths.springbootgroupproject.config.GithubOAuth2UserService;
 import se.iths.springbootgroupproject.entities.Message;
+import se.iths.springbootgroupproject.entities.User;
 import se.iths.springbootgroupproject.services.MessageService;
 import se.iths.springbootgroupproject.services.UserService;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/web")
@@ -31,23 +35,27 @@ public class WebController {
 
     @GetMapping("messages")
     public String getMessages(Model model, Principal principal, @AuthenticationPrincipal OAuth2User oauth2User) {
+
         var messages = messageService.findAllBy();
+        var publicMessages = messageService.findAllByPrivateMessageIsFalse();
         boolean isLoggedIn = principal != null;
-        Integer githubId = (Integer) oauth2User.getAttribute("id");
-        var loggedInUser = userService.findByUserId(githubId);
+
+        Integer githubId;
+        Optional<User> loggedInUser = Optional.empty();
+
+        if (oauth2User != null) {
+            githubId = oauth2User.getAttribute("id");
+            loggedInUser = userService.findByUserId(githubId);
+        }
+
         model.addAttribute("messages", messages);
-        loggedInUser.ifPresent(user -> model.addAttribute("loggedInUser", user));
+        model.addAttribute("publicMessages", publicMessages);
         model.addAttribute("isLoggedIn", isLoggedIn);
-        return "messages";
-    }
-
-    @GetMapping("publicMessages")
-    public String getPublicMessages(Model model) {
-        var messages = messageService.findAllByPrivateMessageIsFalse();
-        model.addAttribute("messages", messages);
+        loggedInUser.ifPresent(user -> model.addAttribute("loggedInUser", user));
 
         return "messages";
     }
+
 
     @GetMapping("create")
     public String postMessage(Model model) {

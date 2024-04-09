@@ -29,9 +29,9 @@
     <a id="logout_link" th:href="@{'/logout?lang=' + ${lang}}" th:text="#{logout}"></a>
 </div>
 <div class="content">
-    <h1 th:text="#{update.message}">Message</h1>
-    <form action="#" th:attr="action='/web/update/'+ ${messageId}" th:object="${formData}" method="POST">
+    <h1 th:text="#{updatemessage}">Message</h1>
 
+    <form th:action="@{'/web/update/' + ${messageId}}" th:object="${formData}" method="POST">
         <input type="hidden" id="messageId" name="messageId" th:value="${messageId}"/>
             <input id="messageTitle" type="text" th:field="*{messageTitle}" th:value="${originalMessage.messageTitle}"/>
         <p th:if="${#fields.hasErrors('messageTitle')}"
