@@ -33,50 +33,38 @@
     <a href="/web/create" th:text="#{postmessage}"></a>
 </div>
 <div class="content">
-    <div th:if="${isLoggedIn}">
-        <h2 th:text="#{messagelist}"></h2>
-        <table th:if="${not messages.isEmpty()}">
-            <thead>
-            <tr>
-                <th th:text="#{message.title}"></th>
-                <th th:text="#{message.body}" class="message_body"></th>
-                <th th:text="#{message.user}"></th>
-                <th th:text="#{message.date}"></th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr th:each="message : ${messages}">
-                    <td th:text="${message.messageTitle}">Title</td>
-                    <td th:text="${message.messageBody}" class="message_body">Lorum ipsum</td>
-                    <td>
-                        <a th:href="@{/web/userMessages(userId=${message.user?.id})}">
-                            <span th:text="${message.user.getUserName()}">Jane Doe</span>
-                        </a>
-                    </td>
-                    <td th:text="${message.date}">2020-01-01</td>
-                    <td th:if="${message.user?.id} == ${loggedInUser?.id}">
-                        <a th:href="@{/web/update/{messageId}(messageId=${message.id})}" th:text="#{updatemessage}"></a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <p th:unless="${not messages.isEmpty()}">No messages found.</p>
-    </div>
-
-    <div th:unless="${isLoggedIn}">
-        <h2 th:text="#{messagelist}"></h2>
-        <table>
-            <tbody>
-            <tr th:each="message : ${publicMessages}">
+    <h2 th:text="#{messagelist}"></h2>
+    <table th:if="${not messages.isEmpty()}">
+        <thead>
+        <tr>
+            <th th:text="#{message.title}"></th>
+            <th th:text="#{message.body}" class="message_body"></th>
+            <th th:text="#{message.user}"></th>
+            <th th:text="#{message.date}"></th>
+            <th th:text="#{message.newdate}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:if="${isLoggedIn}">
+            <tr th:each="message : ${messages}">
                 <td th:text="${message.messageTitle}">Title</td>
-                <td th:text="${message.messageBody}" class="message_body">Lorum ipsum</td>
-                <td th:text="${message.user.getUserName()}">Jane Doe</td>
-                <td th:text="${message.date}">2020-01-01</td>
-            </tr>
-            </tbody>
-        </table>
-        <p th:unless="${not messages.isEmpty()}">No messages found.</p>
-    </div>
-</div>
-</body>
-</html>
+                <td th:text="${message.messageBody}" class="message_body">Lorem ipsum</td>
+                <td th:text="${message.user.userName}">Jane Doe</td>
+                <td th:text="${message.createdDate}">2020-01-01</td>
+                <td>
+                    <span th:if="${message.lastModifiedDate != null}" th:text="${message.lastModifiedDate}
+                       + ' ' + #{editedby} + ': ' + ${message.lastModifiedBy}"></span>
+                    <p id="edit" th:if="${message.user?.id} == ${loggedInUser?.id}">
+                        <a th:href="@{/web/update/{messageId}(messageId=${message.id})}" th:text="#{editmessage}"></a>
+                    </p>
+                  </td>
+
+              </tr>
+          </th:block>
+          </tbody>
+      </table>
+
+      <p th:unless="${not messages.isEmpty()}">No messages found.</p>
+  </div>
+  </body>
+  </html>

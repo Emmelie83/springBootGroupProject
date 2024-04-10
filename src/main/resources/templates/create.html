@@ -39,7 +39,7 @@
         <p th:if="${#fields.hasErrors('messageBody')}"
            th:text="${#strings.listJoin(#fields.errors('messageBody'), ', ')}"></p>
 
-        <p><input type="submit" th:value="#{post}"/> <input type="reset" th:value="#{reset}"/></p>
+        <p><input type="submit" th:value="#{send}"/> <input type="reset" th:value="#{clear}"/></p>
     </form>
 </div>
 </body>
