@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 import se.iths.springbootgroupproject.entities.User;
 import se.iths.springbootgroupproject.repos.UserRepository;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,18 +46,23 @@ public class UserController {
         return userRepository.save(user);
     }
 
-    @GetMapping("/user/data/{gitId}")
-    public ModelAndView getUserSettingsPage(@PathVariable Integer gitId) {
-        Optional<User> userOptional = userRepository.findByGitId(gitId);
+    @GetMapping("/user/data")
+    public ModelAndView getUserSettingsPage(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
-        if (userOptional.isPresent()) {
-            modelAndView.setViewName("userSettings");
-            modelAndView.addObject("user", userOptional.get());
-        } else {
-            modelAndView.setViewName("userNotFound");
+        if (principal != null) {
+            String gitId = principal.getName();
+            Optional<User> userOptional = userRepository.findByGitId(Integer.parseInt(gitId));
+            if (userOptional.isPresent()) {
+                modelAndView.setViewName("userSettings");
+                modelAndView.addObject("user", userOptional.get());
+                return modelAndView;
+            }
         }
+        modelAndView.setViewName("errorPage");
         return modelAndView;
     }
+
+
 }
 
 

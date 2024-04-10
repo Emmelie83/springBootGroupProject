@@ -25,6 +25,7 @@
         <option value="en">English</option>
         <option value="sv">Svenska</option>
     </select>
+    <a id="edit_profile" th:href="@{'/user/data?gitId=' + ${gitId} + '&lang=' + ${lang}}" th:text="#{Profile}"></a>
     <a id="logout_link" th:href="@{'/logout?lang=' + ${lang}}" th:text="#{logout}"></a>
 </div>
 
