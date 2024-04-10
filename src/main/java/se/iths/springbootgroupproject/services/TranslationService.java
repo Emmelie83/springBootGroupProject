@@ -18,24 +18,21 @@ public class TranslationService {
         this.webClient = webClientBuilder.baseUrl("http://localhost:5000").build();
     }
 
-    public boolean detectMessageLanguage(String text) {
-        try {
-            String result = webClient.post()
-                    .uri("/detect")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .bodyValue(Map.of("q", text))
-                    .retrieve()
-                    .bodyToMono(String.class)
-                    .block();
-            return !result.contains("\"en\"");
-        } catch (Exception e) {
-            // Handle error
-            return false;
-        }
+    public String detectMessageLanguage(String text) {
+
+        String result = webClient.post()
+                .uri("/detect")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(Map.of("q", text))
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        if (result.contains("\"en\"")) return "en";
+        else return "sv";
     }
 
-    public String translateMessage(String text) {
-        String sourceLanguage = detectMessageLanguage(text) ? "sv" : "en";
+    public String translateText(String text) {
+        String sourceLanguage = detectMessageLanguage(text);
         String targetLanguage = sourceLanguage.equals("en") ? "sv" : "en";
         String jsonString = String.format("{\"q\":\"%s\",\"source\":\"%s\",\"target\":\"%s\"}", text, sourceLanguage, targetLanguage);
 
@@ -73,4 +70,5 @@ public class TranslationService {
             return null; // Return null indicating failure
         }
     }
+
 }

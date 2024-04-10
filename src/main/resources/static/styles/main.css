@@ -4,7 +4,7 @@ body {
 }
 
 .content {
-    width: 90%;
+    width: 95%;
     margin: auto;
     padding-top: 2em;
 }
@@ -31,7 +31,7 @@ th, td {
 }
 
 .message_body {
-    width: 50%;
+    width: 35%;
     vertical-align: top;
 }
 
