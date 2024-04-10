@@ -3,40 +3,60 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
-    <title>Messages</title>
+    <title>Home</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#locales").change(function () {
+                var selectedOption = $('#locales').val();
+                if (selectedOption != '') {
+                    window.location.replace('home?lang=' + selectedOption);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
+<div class="menu">
+    <span th:text="#{lang.change}"></span>:
+    <select id="locales">
+        <option value="en"></option>
+        <option value="en">English</option>
+        <option value="sv">Svenska</option>
+    </select>
+    <a th:href="@{/web/messages}" th:text="#{login}" id="login_link">Login</a>
+</div>
 <div class="content">
-    <div>
-        <h2 th:text="#{messagelist}"></h2>
-        <table>
-            <thead>
-            <tr>
-                <th th:text="#{message.title}"></th>
-                <th th:text="#{message.body}" class="message_body"></th>
-                <th th:text="#{message.user}"></th>
-                <th th:text="#{message.date}"></th>
-                <th th:text="#{message.newdate}"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="message : ${userMessages}">
-                <td th:text="${message.messageTitle}">Title</td>
-                <td th:text="${message.messageBody}" class="message_body">Lorum ipsum</td>
-                <td th:text="${message.user.getUserName()}">jane doe</td>
-                <td th:text="${message.createdDate}">2020-01-01</td>
-                <td> <span th:if="${message.lastModifiedDate != null}" th:text="${message.lastModifiedDate}
+    <h2 th:text="#{messagelist}"></h2>
+    <table>
+        <thead>
+        <tr>
+            <th th:text="#{message.title}"></th>
+            <th th:text="#{message.body}" class="message_body"></th>
+            <th th:text="#{message.user}"></th>
+            <th th:text="#{message.date}"></th>
+            <th th:text="#{message.newdate}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="message : ${userMessages}">
+            <td th:text="${message.messageTitle}">Title</td>
+            <td th:text="${message.messageBody}" class="message_body">Lorum ipsum</td>
+            <td th:text="${message.user.userName}">jane doe</td>
+            <td th:text="${message.createdDate}">2020-01-01</td>
+            <td> <span th:if="${message.lastModifiedDate != null}" th:text="${message.lastModifiedDate}
                        + ' ' + #{editedby} + ': ' + ${message.lastModifiedBy}"></span>
-                </td>
+            </td>
 
-            </tr>
-            </tbody>
-        </table>
-        <p th:unless="${not userMessages.isEmpty()}">No messages found for this user.</p>
-    </div>
-    <div>
+        </tr>
+        </tbody>
+    </table>
+    <p th:unless="${not userMessages.isEmpty()}">No messages found for this user.</p>
+    <div id="back_to_messagelist">
         <a th:href="@{/web/messages}" class="btn btn-primary" th:text="#{messagelist}"></a>
     </div>
 </div>
+
 </body>
 </html>
