@@ -1,5 +1,10 @@
+body {
+    padding: 3em;
+    font-family: "Calibri Light";
+}
+
 .content {
-    width: 80%;
+    width: 90%;
     margin: auto;
     padding-top: 2em;
 }
@@ -8,18 +13,26 @@
     text-align: right;
 }
 
+
 table, th, td {
     table-layout: fixed;
     border: 1px solid #ccc;
     border-collapse: collapse;
+    vertical-align: top;
+}
+
+#edit {
+    padding: 0.3em 0 0 0;
+    margin: 0;
 }
 
 th, td {
-    padding: 10px;
+    padding: 15px;
 }
 
 .message_body {
     width: 50%;
+    vertical-align: top;
 }
 
 th {
@@ -29,10 +42,6 @@ th {
 
 }
 
-body {
-    padding: 3em;
-    font-family: "Calibri Light";
-}
 
 .post {
     text-align: center;
@@ -73,4 +82,5 @@ input[type=text], #messageBody {
     border-radius: 4px;
     box-sizing: border-box;
 }
+
 

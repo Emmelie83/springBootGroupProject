@@ -2,6 +2,9 @@ package se.iths.springbootgroupproject.services;
 
 import jakarta.persistence.EntityNotFoundException;
 
+import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreFilter;
 import org.springframework.stereotype.Service;
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.entities.PublicMessage;
@@ -19,10 +22,12 @@ public class MessageService {
     public MessageService(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
     }
+
+    //    @PreAuthorize("#updateMessage.user.getId() == authentication.principal.id")
     public Message updateMessage(Long id, Message updateMessage) {
-        Message existingMessage = messageRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Message not found with id: "+id));
-        if (updateMessage.getDate() != null) {
-            existingMessage.setDate(updateMessage.getDate());
+        Message existingMessage = messageRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Message not found with id: " + id));
+        if (updateMessage.getCreatedDate() != null) {
+            existingMessage.setCreatedDate(updateMessage.getCreatedDate());
         }
 
         if (updateMessage.getMessageTitle() != null) {
@@ -37,8 +42,10 @@ public class MessageService {
             existingMessage.setUser(updateMessage.getUser());
         }
 
+        existingMessage.setLastModifiedDate(LocalDate.now());
 
-            existingMessage.setPublic(updateMessage.isPublic());
+
+        existingMessage.setPublic(updateMessage.isPublic());
 
         return messageRepository.save(existingMessage);
     }

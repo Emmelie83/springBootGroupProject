@@ -1,5 +1,6 @@
 package se.iths.springbootgroupproject.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.services.MessageService;
