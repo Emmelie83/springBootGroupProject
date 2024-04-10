@@ -104,7 +104,7 @@ public class WebController {
         Message originalMessage = messageService.findById(messageId).get();
         originalMessage.setMessageTitle(message.getMessageTitle());
         originalMessage.setMessageBody(message.getMessageBody());
-        originalMessage.setDate(LocalDate.now());
+        originalMessage.setCreatedDate(LocalDate.now());
 
         messageService.updateMessage(messageId, originalMessage);
 
