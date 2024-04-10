@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+    <title>Messages</title>
+</head>
+<body>
+<div class="content">
+    <div>
+        <h2 th:text="#{messagelist}"></h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Message Body</th>
+                <th>User</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="message : ${userMessages}">
+                <td th:text="${message.messageTitle}">Title</td>
+                <td th:text="${message.messageBody}" class="message_body">Lorum ipsum</td>
+                <td th:text="${message.user.getUserName()}">jane doe</td>
+                <td th:text="${message.date}">2020-01-01</td>
+            </tr>
+            </tbody>
+        </table>
+        <p th:unless="${not userMessages.isEmpty()}">No messages found for this user.</p>
+    </div>
+</div>
+</body>
+</html>

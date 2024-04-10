@@ -125,4 +125,14 @@ public class WebController {
 
         return "messages";
     }
+
+
+    @GetMapping("userMessages")
+    public String getUserMessages(@RequestParam Long userId, Model model) {
+        var userMessages = messageService.fidAllByUserId(userId);
+
+        model.addAttribute("userMessages", userMessages);
+
+        return "userMessages";
+    }
 }
