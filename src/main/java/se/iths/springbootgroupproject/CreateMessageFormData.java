@@ -24,11 +24,14 @@ public class CreateMessageFormData {
     @Size(min = 1, max = 2000)
     private String messageBody;
 
+    private boolean makePublic;
+
     public Message toEntity(User user) {
         var message = new Message();
         message.setLastModifiedDate(null);
         message.setMessageTitle(messageTitle);
         message.setMessageBody(messageBody);
+        message.setPublic(makePublic);
         message.setUser(user);
         return message;
     }
