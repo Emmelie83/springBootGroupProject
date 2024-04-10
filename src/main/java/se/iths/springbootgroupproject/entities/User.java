@@ -9,33 +9,28 @@ import org.springframework.data.relational.core.mapping.Column;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Getter
+@Setter
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
     @jakarta.persistence.Column(unique = true, name = "git_id")
     private Integer gitId;
 
-    @Setter
     @jakarta.persistence.Column(unique = true, name = "user_name")
     private String userName;
 
-    @Setter
     @Column("full_name")
     private String fullName;
 
-    @Setter
     @jakarta.persistence.Column(unique = true, name = "email")
     private String email;
 
-    @Setter
     @Column("avatar_url")
     private String avatarUrl;
 
-    @Setter
     @Column("role")
     private String role;
 }

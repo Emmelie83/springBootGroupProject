@@ -15,6 +15,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -24,31 +25,24 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
     @CreatedDate
     private LocalDate createdDate;
 
-    @Setter
     private LocalDate lastModifiedDate;
 
-    @Setter
     @LastModifiedBy
     private String lastModifiedBy;
 
-    @Setter
     @Column("title")
     private String messageTitle;
 
-    @Setter
     @Column("message_body")
     private String messageBody;
 
-    @Setter
     @ManyToOne()
     @JoinColumn(name = "user")
     private User user;
 
-    @Setter
     @Column("is_public")
     private boolean isPublic = false;
 
