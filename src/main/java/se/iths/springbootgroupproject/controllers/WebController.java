@@ -86,7 +86,7 @@ public class WebController {
     public String updateMessage(@PathVariable Long messageId, Model model) {
         Message message = messageService.findById(messageId).get();
 
-        CreateMessageFormData formData = new CreateMessageFormData(message.getMessageTitle(), message.getMessageBody());
+        CreateMessageFormData formData = new CreateMessageFormData(message.getMessageTitle(), message.getMessageBody(), message.isPublic());
         model.addAttribute("formData", formData);
         model.addAttribute("originalMessage", message); // Add the original message to the model
         model.addAttribute("messageId", messageId);
@@ -104,7 +104,8 @@ public class WebController {
         Message originalMessage = messageService.findById(messageId).get();
         originalMessage.setMessageTitle(message.getMessageTitle());
         originalMessage.setMessageBody(message.getMessageBody());
-        originalMessage.setCreatedDate(LocalDate.now());
+        originalMessage.setPublic(message.isMakePublic());
+//        originalMessage.setCreatedDate(LocalDate.now());
 
         messageService.updateMessage(messageId, originalMessage);
 
@@ -127,4 +128,13 @@ public class WebController {
     }
 
 
+    @GetMapping("userMessages")
+    public String getUserMessages(@RequestParam Long userId, Model model) {
+        var userMessages = messageService.fidAllByUserId(userId);
+
+        model.addAttribute("userMessages", userMessages);
+
+        return "userMessages";
+    }
+  
 }
