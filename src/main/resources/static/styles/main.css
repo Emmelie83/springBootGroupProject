@@ -54,6 +54,10 @@ th {
     margin-left: 1em;
 }
 
+#back_to_messagelist {
+    padding-top: 1.5em;
+}
+
 #home {
     text-align: center;
 }

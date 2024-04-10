@@ -14,4 +14,5 @@ public interface MessageRepository extends ListCrudRepository<Message, Long> {
     List<PublicMessage> findAllByIsPublicIsTrue();
 
 
+    List<Message> findAllByUserId(Long userId);
 }

@@ -69,4 +69,7 @@ public class MessageService {
         return messageRepository.findById(id);
     }
 
+    public List<Message> fidAllByUserId(Long userId) {
+        return messageRepository.findAllByUserId(userId);
+    }
 }
