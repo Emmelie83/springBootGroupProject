@@ -4,8 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <title>Messages</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#locales").change(function () {
@@ -51,8 +50,7 @@
             <td th:text="${message.user.userName}">Jane Doe</td>
             <td th:text="${message.createdDate}">2020-01-01</td>
             <td>
-                    <span th:if="${message.lastModifiedDate != null}" th:text="${message.lastModifiedDate}
-                       + ' ' + #{editedby} + ': ' + ${message.lastModifiedBy}"></span>
+                <span th:if="${message.lastModifiedDate != null}" th:text="${message.lastModifiedDate} + ' ' + #{editedby} + ': ' + ${message.lastModifiedBy}"></span>
                 <p id="edit" th:if="${message.user?.id} == ${loggedInUser?.id}">
                     <a th:href="@{/web/update/{messageId}(messageId=${message.id})}" th:text="#{editmessage}"></a>
                 </p>
@@ -62,5 +60,44 @@
     </table>
     <p th:unless="${not messages.isEmpty()}">No messages found.</p>
 </div>
+<div>
+    <button id="prevButton">Previous</button>
+    <button id="nextButton">Next</button>
+    <span id="pageNumber"></span>
+</div>
+
+<script>
+    // Variables for pagination
+    let currentPage = 1; // Initial page number
+    const totalPages = 20; // Total number of pages
+
+    // Update page number
+    function updatePageNumber() {
+        document.getElementById('pageNumber').textContent = currentPage;
+    }
+
+    // Show next page
+    document.getElementById('nextButton').addEventListener('click', function() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            updatePageNumber();
+            // Update page URL
+            window.location.href = "?page=" + currentPage;
+        }
+    });
+
+    // Show previous page
+    document.getElementById('prevButton').addEventListener('click', function() {
+        if (currentPage > 10) {
+            currentPage--;
+            updatePageNumber();
+            // Update page URL
+            window.location.href = "?page=" + currentPage;
+        }
+    });
+
+    // Initial page number
+    updatePageNumber();
+</script>
 </body>
 </html>

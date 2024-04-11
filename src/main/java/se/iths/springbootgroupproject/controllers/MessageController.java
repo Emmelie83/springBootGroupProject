@@ -1,5 +1,7 @@
 package se.iths.springbootgroupproject.controllers;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import se.iths.springbootgroupproject.entities.Message;
@@ -18,8 +20,8 @@ public class MessageController {
     }
 
     @GetMapping("/messages")
-    public List<Message> getAllMessages() {
-        List<Message> messages = messageService.findAllBy();
+    public Page<Message> getAllMessages() {
+        Page<Message> messages = messageService.findAllBy(Pageable.unpaged());
 
         System.out.println("All messages are read from the database!");
 
