@@ -66,7 +66,7 @@ th {
     padding-bottom: 1.5em;
 }
 
-input[type=button], input[type=submit], input[type=reset] {
+input[type=button], input[type=submit], input[type=reset], button {
     background-color: #04AA6D;
     border: none;
     color: white;
@@ -74,7 +74,7 @@ input[type=button], input[type=submit], input[type=reset] {
     margin: 4px
 }
 
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, button:hover {
     background-color: #f2f2f2;
     color: black;
     border: 1px solid #ccc;
@@ -89,6 +89,14 @@ input[type=text], #messageBody {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+#pagination_buttons {
+    margin-top: 1.5em;
+}
+
+#prev_button {
+    margin-left: 0;
 }
 
 

@@ -1,13 +1,9 @@
 package se.iths.springbootgroupproject.controllers;
 
 import jakarta.validation.Valid;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -42,7 +38,7 @@ public class WebController {
                               @RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "3") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Message> Pmessages = messageService.findPaginatedMessages(pageable);
+        Page<Message> paginatedMessages = messageService.findPaginatedMessages(pageable);
         var publicMessages = messageService.findAllByPrivateMessageIsFalse();
         boolean isLoggedIn = principal != null;
 
@@ -54,7 +50,7 @@ public class WebController {
             loggedInUser = userService.findByUserId(githubId);
         }
 
-        model.addAttribute("messages", Pmessages);
+        model.addAttribute("messages", paginatedMessages);
         model.addAttribute("publicMessages", publicMessages);
         model.addAttribute("isLoggedIn", isLoggedIn);
         loggedInUser.ifPresent(user -> model.addAttribute("loggedInUser", user));

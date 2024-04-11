@@ -77,19 +77,22 @@
         </tbody>
     </table>
     <p th:unless="${not messages.isEmpty()}">No messages found.</p>
-    <button id="prevButton">Previous</button>
-    <button id="nextButton">Next</button>
-    <span id="pageNumber"></span>
+    <p id="pagination_buttons">
+        <p>
+        <span th:text="#{page} + ': '"></span>
+        <span  id="page_number"></span>
+    </p>
+        <button id="prev_button">Previous</button>
+        <button id="next_button">Next</button>
+    </p>
 </div>
-
 <script>
 
     let currentPage = 0;
-    const totalPages = 4;
 
 
     function updatePageNumber() {
-        document.getElementById('pageNumber').textContent = currentPage;
+        document.getElementById('page_number').textContent = currentPage + 1;
     }
 
 
@@ -99,7 +102,6 @@
             updatePageNumber();
 
             window.location.href = "?page=" + currentPage;
-        }
     }
 
 
@@ -113,15 +115,15 @@
     }
 
 
-    document.getElementById('nextButton').addEventListener('click', nextPage);
+    document.getElementById('next_button').addEventListener('click', nextPage);
 
 
-    document.getElementById('prevButton').addEventListener('click', previousPage);
+    document.getElementById('prev_button').addEventListener('click', previousPage);
 
 
     const urlParams = new URLSearchParams(window.location.search);
     const pageParam = urlParams.get('page');
-    if (pageParam !== null && !isNaN(pageParam) && pageParam > 0 && pageParam <= totalPages) {
+    if (pageParam !== null && !isNaN(pageParam) && pageParam > 0) {
         currentPage = parseInt(pageParam);
     }
     updatePageNumber();
