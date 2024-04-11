@@ -3,6 +3,7 @@ package se.iths.springbootgroupproject.controllers;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -130,6 +131,29 @@ public class WebController {
         return modelAndView;
     }
 
+    @PostMapping("/user/update")
+    public String updateUserProfile(@ModelAttribute User user, Model model, @AuthenticationPrincipal OAuth2User oauth2User) {
+        if (oauth2User != null) {
+            Integer userId = (Integer) oauth2User.getAttribute("id");
+            Optional<User> currentUserOptional = userService.findByUserId(userId);
+            if (currentUserOptional.isPresent()) {
+                User currentUser = currentUserOptional.get();
+                currentUser.setFullName(user.getFullName());
+                currentUser.setUserName(user.getUserName());
+                currentUser.setEmail(user.getEmail());
+
+                userService.saveUser(currentUser);
+
+                model.addAttribute("updateSuccess", true);
+
+                return "redirect:/web/user/data";
+            } else {
+                return "redirect:/web/errorPage";
+            }
+        } else {
+            return "redirect:/web/errorPage";
+        }
+    }
 
     @GetMapping("/web/messages")
     public String messagesPage(@RequestParam(name = "lang", defaultValue = "en") String lang, Model model) {
