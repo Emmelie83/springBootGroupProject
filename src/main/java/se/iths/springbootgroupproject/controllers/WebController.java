@@ -1,6 +1,7 @@
 package se.iths.springbootgroupproject.controllers;
 
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -69,7 +70,7 @@ public class WebController {
         if (bindingResult.hasErrors()) {
             return "create";
         }
-        Integer githubId = (Integer) oauth2User.getAttribute("id");
+        Integer githubId = oauth2User.getAttribute("id");
         var loggedInUser = userService.findByUserId(githubId);
 
         messageService.saveMessage(message.toEntity(loggedInUser.orElse(null)));
@@ -81,17 +82,28 @@ public class WebController {
     public String updateMessage(@PathVariable Long messageId, Model model, @AuthenticationPrincipal OAuth2User oauth2User) {
         Message message = messageService.findById(messageId).get();
 
-        Integer githubId = oauth2User.getAttribute("id");
-
-        if (!Objects.equals(message.getUser().getGitId(), githubId)) {
-            return "redirect:/web/messages";
-        }
+        String redirectUrl = redirectIfNotOwnerOrAdmin(oauth2User, message);
+        if (redirectUrl != null) return redirectUrl;
 
         CreateMessageFormData formData = new CreateMessageFormData(message.getMessageTitle(), message.getMessageBody(), message.isPublic());
         model.addAttribute("formData", formData);
         model.addAttribute("originalMessage", message); // Add the original message to the model
         model.addAttribute("messageId", messageId);
         return "update";
+    }
+
+    private String redirectIfNotOwnerOrAdmin(OAuth2User oauth2User, Message message) {
+        if (oauth2User == null) {
+            return "redirect:/web/messages";
+        }
+
+        Integer githubId = oauth2User.getAttribute("id");
+        Optional<User> loggedInUser = userService.findByUserId(githubId);
+
+        if (!Objects.equals(message.getUser().getGitId(), githubId) && (loggedInUser.isEmpty() || !loggedInUser.get().getRole().equals("ROLE_ADMIN"))) {
+            return "redirect:/web/messages";
+        }
+        return null;
     }
 
     @PostMapping("update/{messageId}")
