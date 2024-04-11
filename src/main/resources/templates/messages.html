@@ -88,12 +88,11 @@
 
 
     function updatePageNumber() {
-        document.getElementById('page_number').textContent = currentPage + 1;
+        document.getElementById('page_number').textContent = (currentPage + 1);
     }
 
 
     function nextPage() {
-        if (currentPage < totalPages) {
             currentPage++;
             updatePageNumber();
 
@@ -118,7 +117,7 @@
 
 
     const urlParams = new URLSearchParams(window.location.search);
-    const pageParam = urlParams.get('page');
+    let pageParam = urlParams.get('page');
     if (pageParam !== null && !isNaN(pageParam) && pageParam > 0) {
         currentPage = parseInt(pageParam);
     }
