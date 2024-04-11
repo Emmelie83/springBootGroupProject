@@ -53,7 +53,11 @@
 
 
             </td>
-            <td th:text="${message.user.userName}">Jane Doe</td>
+            <td>
+                <a th:href="@{/web/userMessages(userId=${message.user?.id})}">
+                    <span th:text="${message.user.userName}">Jane Doe</span>
+                </a>
+            </td>
             <td th:text="${message.createdDate}">2020-01-01</td>
             <td>
                     <span th:if="${message.lastModifiedDate != null}" th:text="${message.lastModifiedDate}
