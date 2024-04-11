@@ -4,28 +4,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <title>Home</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#locales").change(function () {
-                var selectedOption = $('#locales').val();
-                if (selectedOption != '') {
-                    window.location.replace('home?lang=' + selectedOption);
-                }
-            });
-        });
-    </script>
 </head>
 <body>
 <div class="menu">
-    <span th:text="#{lang.change}"></span>:
-    <select id="locales">
-        <option value="en"></option>
-        <option value="en">English</option>
-        <option value="sv">Svenska</option>
-    </select>
-    <a th:href="@{/web/messages}" th:text="#{login}" id="login_link">Login</a>
+    <a class="menu_link" th:href="@{'/swagger-ui/index.html'}">Endpoints</a>
+    <a class="menu_link" th:href="@{${httpServletRequest.requestURI} + '?lang=en'}">English</a>
+    <a class="menu_link" th:href="@{${httpServletRequest.requestURI} + '?lang=sv'}">Svenska</a>
+    <a class="menu_link" id="logout_link" th:href="'/logout'" th:text="#{logout}"></a>
 </div>
 <div class="content">
     <h2 th:text="#{messagelist}"></h2>

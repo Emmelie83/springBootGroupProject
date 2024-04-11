@@ -2,20 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+  <link th:href="@{static/styles/main.css}" rel="stylesheet"/>
   <title>Messages</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-  </script>
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $("#locales").change(function () {
-        var selectedOption = $('#locales').val();
-        if (selectedOption != '') {
-          window.location.replace('translation?lang=' + selectedOption);
-        }
-      });
-    });
-  </script>
   <style>
     body {
       padding: 3em;
@@ -40,10 +28,6 @@
       vertical-align: top;
     }
 
-    #edit {
-      padding: 0.3em 0 0 0;
-      margin: 0;
-    }
 
     th, td {
       padding: 15px;
@@ -58,13 +42,24 @@
       color: white;
       text-align: left;
       background-color: #04AA6D;
-
     }
+
+    .menu_link {
+      margin-left: 0.5em;
+    }
+
+    #logout_link {
+      margin-right: 2em;
+    }
+
   </style>
 </head>
 <body>
 <div class="menu">
-  <a id="logout_link" th:href="@{'/logout?lang=' + ${lang}}" th:text="#{logout}"></a>
+  <a class="menu_link" th:href="@{'/swagger-ui/index.html'}">Endpoints</a>
+  <a class="menu_link" th:href="@{${httpServletRequest.requestURI} + '?lang=en'}">English</a>
+  <a class="menu_link" th:href="@{${httpServletRequest.requestURI} + '?lang=sv'}">Svenska</a>
+  <a class="menu_link" id="logout_link" th:href="'/logout'" th:text="#{logout}"></a>
 </div>
 <div class="content">
   <h1 th:text="#{translatedmessage}">Welcome</h1>

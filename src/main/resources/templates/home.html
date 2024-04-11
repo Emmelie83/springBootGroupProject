@@ -4,18 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <title>Home</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#locales").change(function () {
-                var selectedOption = $('#locales').val();
-                if (selectedOption != '') {
-                    window.location.replace('home?lang=' + selectedOption);
-                }
-            });
-        });
-    </script>
     <style>
         body {
             padding: 3em;
@@ -40,10 +28,6 @@
             vertical-align: top;
         }
 
-        #edit {
-            padding: 0.3em 0 0 0;
-            margin: 0;
-        }
 
         th, td {
             padding: 15px;
@@ -61,16 +45,12 @@
 
         }
 
-
-        .post {
-            text-align: center;
-            margin-top: 3em;
+        .menu_link {
+            margin-left: 0.5em;
         }
 
-
-        #logout_link,
         #login_link {
-            margin-left: 1em;
+            margin-right: 2em;
         }
 
         #home {
@@ -80,13 +60,9 @@
 </head>
 <body>
 <div class="menu">
-    <span th:text="#{lang.change}"></span>:
-    <select id="locales">
-        <option value="en"></option>
-        <option value="en">English</option>
-        <option value="sv">Svenska</option>
-    </select>
-    <a th:href="@{/web/messages}" th:text="#{login}" id="login_link">Login</a>
+    <a class="menu_link" th:href="@{'/home?lang=en'}">English</a>
+    <a class="menu_link" th:href="@{'/home?lang=sv'}">Svenska</a>
+    <a class="menu_link" id="login_link" th:href="'/login'" th:text="#{login}"></a>
 </div>
 <h1 th:text="#{greeting}" id="home">Welcome</h1>
 <div class="content">

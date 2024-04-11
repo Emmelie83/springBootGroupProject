@@ -4,28 +4,13 @@
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <title>Add a message</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#locales").change(function () {
-                var selectedOption = $('#locales').val();
-                if (selectedOption != '') {
-                    window.location.replace('create?lang=' + selectedOption);
-                }
-            });
-        });
-    </script>
 </head>
 <body>
 <div class="menu">
-    <span th:text="#{lang.change}"></span>:
-    <select id="locales">
-        <option value=""></option>
-        <option value="en">English</option>
-        <option value="sv">Svenska</option>
-    </select>
-    <a id="logout_link" th:href="@{'/logout?lang=' + ${lang}}" th:text="#{logout}"></a>
+        <a class="menu_link" th:href="@{'/swagger-ui/index.html'}">Endpoints</a>
+        <a class="menu_link" th:href="@{'/create?lang=en'}">English</a>
+        <a class="menu_link" th:href="@{'/create?lang=sv'}">Svenska</a>
+        <a class="menu_link" id="logout_link" th:href="'/logout'" th:text="#{logout}"></a>
 </div>
 <div class="content">
     <h1 th:text="#{new.message}">Message</h1>

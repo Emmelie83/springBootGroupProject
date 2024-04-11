@@ -48,10 +48,13 @@ th {
     margin-top: 3em;
 }
 
+.menu_link {
+    margin-left: 0.5em;
+}
 
 #logout_link,
 #login_link {
-    margin-left: 1em;
+    margin-right: 2em;
 }
 
 #back_to_messagelist {
@@ -98,5 +101,8 @@ input[type=text], #messageBody {
 #prev_button {
     margin-left: 0;
 }
+
+
+
 
 
