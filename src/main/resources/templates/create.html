@@ -38,8 +38,10 @@
             <textarea id="messageBody" th:field="*{messageBody}" th:placeholder="#{message}" cols="100" rows="6"></textarea>
         <p th:if="${#fields.hasErrors('messageBody')}"
            th:text="${#strings.listJoin(#fields.errors('messageBody'), ', ')}"></p>
-        <input type="checkbox" th:field="*{makePublic}" id="makePublic"/>
-        <label for="makePublic" th:text="#{makepublic}">Make Public</label>
+        <p class="checkbox">
+            <input  type="checkbox" th:field="*{makePublic}" id="makePublic"/>
+            <label class=for="makePublic" th:text="#{makepublic}">Make Public</label>
+        </p>
 
         <p><input type="submit" th:value="#{send}"/> <input type="reset" th:value="#{clear}"/></p>
     </form>

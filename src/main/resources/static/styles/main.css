@@ -62,6 +62,10 @@ th {
     text-align: center;
 }
 
+.checkbox {
+    padding-bottom: 1.5em;
+}
+
 input[type=button], input[type=submit], input[type=reset] {
     background-color: #04AA6D;
     border: none;
