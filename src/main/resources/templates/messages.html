@@ -44,6 +44,7 @@
             <th th:text="#{message.translate}"></th>
         </tr>
         </thead>
+
         <tbody>
         <tr th:each="message : ${messages}">
             <td th:text="${message.messageTitle}">Title</td>
@@ -92,6 +93,7 @@
 
 
     function nextPage() {
+        if (currentPage < totalPages) {
             currentPage++;
             updatePageNumber();
 
