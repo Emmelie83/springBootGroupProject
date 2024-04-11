@@ -1,25 +1,20 @@
 package se.iths.springbootgroupproject.controllers;
 
 import jakarta.validation.Valid;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import se.iths.springbootgroupproject.CreateMessageFormData;
-import se.iths.springbootgroupproject.config.GithubOAuth2UserService;
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.entities.User;
 import se.iths.springbootgroupproject.services.MessageService;
 import se.iths.springbootgroupproject.services.UserService;
 
 import java.security.Principal;
-import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -83,8 +78,14 @@ public class WebController {
     }
 
     @GetMapping("update/{messageId}")
-    public String updateMessage(@PathVariable Long messageId, Model model) {
+    public String updateMessage(@PathVariable Long messageId, Model model, @AuthenticationPrincipal OAuth2User oauth2User) {
         Message message = messageService.findById(messageId).get();
+
+        Integer githubId = oauth2User.getAttribute("id");
+
+        if (!Objects.equals(message.getUser().getGitId(), githubId)) {
+            return "redirect:/web/messages";
+        }
 
         CreateMessageFormData formData = new CreateMessageFormData(message.getMessageTitle(), message.getMessageBody(), message.isPublic());
         model.addAttribute("formData", formData);
@@ -95,8 +96,8 @@ public class WebController {
 
     @PostMapping("update/{messageId}")
     public String greetingSubmit(@PathVariable Long messageId, @Valid @ModelAttribute("formData") CreateMessageFormData message,
-                                BindingResult bindingResult,  @AuthenticationPrincipal OAuth2User oauth2User,
-                                Model model) {
+                                 BindingResult bindingResult, @AuthenticationPrincipal OAuth2User oauth2User,
+                                 Model model) {
         if (bindingResult.hasErrors()) {
             return "update";
         }
@@ -105,7 +106,6 @@ public class WebController {
         originalMessage.setMessageTitle(message.getMessageTitle());
         originalMessage.setMessageBody(message.getMessageBody());
         originalMessage.setPublic(message.isMakePublic());
-//        originalMessage.setCreatedDate(LocalDate.now());
 
         messageService.updateMessage(messageId, originalMessage);
 
@@ -136,5 +136,5 @@ public class WebController {
 
         return "userMessages";
     }
-  
+
 }
