@@ -53,21 +53,17 @@ public class TranslationService {
 
     private String extractTranslatedText(String response) {
         try {
-            // Create an ObjectMapper instance
+
             ObjectMapper mapper = new ObjectMapper();
 
-            // Parse the JSON response
             JsonNode rootNode = mapper.readTree(response);
 
-            // Extract the translated text
             String translatedText = rootNode.get("translatedText").asText();
 
-            // Return the translated text
             return translatedText;
         } catch (Exception e) {
-            // Handle any exceptions, such as JSON parsing errors
-            e.printStackTrace(); // For debugging purposes
-            return null; // Return null indicating failure
+            e.printStackTrace();
+            return null;
         }
     }
 
