@@ -45,24 +45,6 @@ public class UserController {
         user.getId();
         return userRepository.save(user);
     }
-
-    @GetMapping("/user/data")
-    public ModelAndView getUserSettingsPage(Principal principal) {
-        ModelAndView modelAndView = new ModelAndView();
-        if (principal != null) {
-            String gitId = principal.getName();
-            Optional<User> userOptional = userRepository.findByGitId(Integer.parseInt(gitId));
-            if (userOptional.isPresent()) {
-                modelAndView.setViewName("userSettings");
-                modelAndView.addObject("user", userOptional.get());
-                return modelAndView;
-            }
-        }
-        modelAndView.setViewName("errorPage");
-        return modelAndView;
-    }
-
-
 }
 
 

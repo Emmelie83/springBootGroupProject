@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import se.iths.springbootgroupproject.CreateMessageFormData;
 import se.iths.springbootgroupproject.config.GithubOAuth2UserService;
 import se.iths.springbootgroupproject.entities.Message;
@@ -110,6 +111,25 @@ public class WebController {
 
         return "redirect:/web/messages";
     }
+
+    @RequestMapping("/user/data")
+    public ModelAndView getUserSettingsPage(@AuthenticationPrincipal OAuth2User oauth2User) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (oauth2User != null) {
+            Integer githubId = oauth2User.getAttribute("id");
+            var loggedInUser = userService.findByUserId(githubId);
+            if (loggedInUser.isPresent()) {
+                modelAndView.setViewName("userSettings");
+                modelAndView.addObject("user", loggedInUser.get());
+            } else {
+                modelAndView.setViewName("errorPage");
+            }
+        } else {
+            modelAndView.setViewName("errorPage");
+        }
+        return modelAndView;
+    }
+
 
     @GetMapping("/web/messages")
     public String messagesPage(@RequestParam(name = "lang", defaultValue = "en") String lang, Model model) {
