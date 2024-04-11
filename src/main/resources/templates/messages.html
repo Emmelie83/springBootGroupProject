@@ -44,6 +44,7 @@
             <th th:text="#{message.translate}"></th>
         </tr>
         </thead>
+
         <tbody>
         <tr th:each="message : ${messages}">
             <td th:text="${message.messageTitle}">Title</td>
@@ -72,8 +73,6 @@
         </tbody>
     </table>
     <p th:unless="${not messages.isEmpty()}">No messages found.</p>
-</div>
-<div>
     <button id="prevButton">Previous</button>
     <button id="nextButton">Next</button>
     <span id="pageNumber"></span>
@@ -82,7 +81,7 @@
 <script>
 
     let currentPage = 0;
-    const totalPages = 3;
+    const totalPages = 4;
 
 
     function updatePageNumber() {
@@ -101,7 +100,7 @@
 
 
     function previousPage() {
-        if (currentPage > 1) {
+        if (currentPage > 0) {
             currentPage--;
             updatePageNumber();
 
