@@ -2,12 +2,7 @@ package se.iths.springbootgroupproject.services;
 
 import jakarta.persistence.EntityNotFoundException;
 
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PostFilter;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.access.prepost.PreFilter;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.stereotype.Service;
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.entities.PublicMessage;
