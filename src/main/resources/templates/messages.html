@@ -4,8 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <title>Messages</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#locales").change(function () {
@@ -45,6 +44,7 @@
             <th th:text="#{message.translate}"></th>
         </tr>
         </thead>
+
         <tbody>
         <tr th:each="message : ${messages}">
             <td th:text="${message.messageTitle}">Title</td>
@@ -60,8 +60,7 @@
             </td>
             <td th:text="${message.createdDate}">2020-01-01</td>
             <td>
-                    <span th:if="${message.lastModifiedDate != null}" th:text="${message.lastModifiedDate}
-                       + ' ' + #{editedby} + ': ' + ${message.lastModifiedBy}"></span>
+                <span th:if="${message.lastModifiedDate != null}" th:text="${message.lastModifiedDate} + ' ' + #{editedby} + ': ' + ${message.lastModifiedBy}"></span>
                 <p id="edit" th:if="${message.user?.id} == ${loggedInUser?.id}">
                     <a th:href="@{/web/update/{messageId}(messageId=${message.id})}" th:text="#{editmessage}"></a>
                 </p>
@@ -78,6 +77,55 @@
         </tbody>
     </table>
     <p th:unless="${not messages.isEmpty()}">No messages found.</p>
+    <button id="prevButton">Previous</button>
+    <button id="nextButton">Next</button>
+    <span id="pageNumber"></span>
 </div>
+
+<script>
+
+    let currentPage = 0;
+    const totalPages = 4;
+
+
+    function updatePageNumber() {
+        document.getElementById('pageNumber').textContent = currentPage;
+    }
+
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            updatePageNumber();
+
+            window.location.href = "?page=" + currentPage;
+        }
+    }
+
+
+    function previousPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            updatePageNumber();
+
+            window.location.href = "?page=" + currentPage;
+        }
+    }
+
+
+    document.getElementById('nextButton').addEventListener('click', nextPage);
+
+
+    document.getElementById('prevButton').addEventListener('click', previousPage);
+
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageParam = urlParams.get('page');
+    if (pageParam !== null && !isNaN(pageParam) && pageParam > 0 && pageParam <= totalPages) {
+        currentPage = parseInt(pageParam);
+    }
+    updatePageNumber();
+
+</script>
 </body>
 </html>
