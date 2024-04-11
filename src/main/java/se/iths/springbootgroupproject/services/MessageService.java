@@ -3,6 +3,13 @@ package se.iths.springbootgroupproject.services;
 import jakarta.persistence.EntityNotFoundException;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreFilter;
+
 import org.springframework.stereotype.Service;
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.entities.PublicMessage;
@@ -58,8 +65,8 @@ public class MessageService {
         return message;
     }
 
-    public List<Message> findAllBy() {
-        return messageRepository.findAllBy();
+    public Page<Message> findAllBy(Pageable pageable) {
+        return messageRepository.findAllBy(pageable);
     }
 
     public List<PublicMessage> findAllByPrivateMessageIsFalse() {
@@ -74,6 +81,11 @@ public class MessageService {
         return messageRepository.findAllByUserId(userId);
     }
 
+    public Page<Message> findPaginatedMessages(Pageable pageable) {
+
+        return messageRepository.findAllBy(pageable);
+    }
+
 
 //    public Message translateMessage(Message message) {
 //        String translatedTitle = translationService.translateText(message.getMessageTitle());
@@ -82,4 +94,5 @@ public class MessageService {
 //        message.setMessageBody(translatedBody);
 //        return message;
 //    }
+
 }

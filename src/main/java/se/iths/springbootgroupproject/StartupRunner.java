@@ -2,7 +2,11 @@ package se.iths.springbootgroupproject;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Component;
+
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.entities.User;
 import se.iths.springbootgroupproject.repos.MessageRepository;
@@ -33,7 +37,7 @@ public class StartupRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         LOG.info("Checking for Message");
 
-        if (messageRepository.findAllBy().isEmpty()) {
+        if (messageRepository.findAllBy(Pageable.unpaged()).isEmpty()) {
             LOG.info("Messages not found. Creating Messages");
 
             saveMessage("Eini", "Eini Enhörning", "eini@eteam.com","ROLE_USER", createMessage("Öl är gott", "Utan öl i tio dagar försmäktar jag i detta öde land."), true);
