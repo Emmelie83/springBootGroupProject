@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.relational.core.mapping.Column;
 
@@ -38,6 +37,9 @@ public class Message {
 
     @Column("message_body")
     private String messageBody;
+
+    @Column("message_language")
+    private String messageLanguage;
 
     @ManyToOne()
     @JoinColumn(name = "user")

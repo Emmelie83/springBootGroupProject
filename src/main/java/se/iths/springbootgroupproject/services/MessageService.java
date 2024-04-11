@@ -1,10 +1,6 @@
 package se.iths.springbootgroupproject.services;
 
 import jakarta.persistence.EntityNotFoundException;
-
-import org.springframework.security.access.prepost.PostFilter;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.access.prepost.PreFilter;
 import org.springframework.stereotype.Service;
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.entities.PublicMessage;
@@ -18,9 +14,11 @@ import java.util.Optional;
 public class MessageService {
 
     MessageRepository messageRepository;
+    TranslationService translationService;
 
-    public MessageService(MessageRepository messageRepository) {
+    public MessageService(MessageRepository messageRepository, TranslationService translationService) {
         this.messageRepository = messageRepository;
+        this.translationService = translationService;
     }
 
     //    @PreAuthorize("#updateMessage.user.getId() == authentication.principal.id")
@@ -47,12 +45,13 @@ public class MessageService {
 
         existingMessage.setPublic(updateMessage.isPublic());
 
-        return messageRepository.save(existingMessage);
+        return saveMessage(existingMessage);
     }
 
 
     public Message saveMessage(Message message) {
-
+        String language = translationService.detectMessageLanguage(message.getMessageBody());
+        message.setMessageLanguage(language);
         messageRepository.save(message);
         return message;
     }
@@ -72,4 +71,13 @@ public class MessageService {
     public List<Message> fidAllByUserId(Long userId) {
         return messageRepository.findAllByUserId(userId);
     }
+
+
+//    public Message translateMessage(Message message) {
+//        String translatedTitle = translationService.translateText(message.getMessageTitle());
+//        message.setMessageTitle(translatedTitle);
+//        String translatedBody = translationService.translateText(message.getMessageBody());
+//        message.setMessageBody(translatedBody);
+//        return message;
+//    }
 }
