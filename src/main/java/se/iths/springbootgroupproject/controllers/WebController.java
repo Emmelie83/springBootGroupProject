@@ -4,6 +4,10 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -18,6 +22,7 @@ import se.iths.springbootgroupproject.services.TranslationService;
 import se.iths.springbootgroupproject.services.UserService;
 
 import java.security.Principal;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -89,7 +94,7 @@ public class WebController {
         if (bindingResult.hasErrors()) {
             return "create";
         }
-        Integer githubId = (Integer) oauth2User.getAttribute("id");
+        Integer githubId = oauth2User.getAttribute("id");
         var loggedInUser = userService.findByUserId(githubId);
 
         messageService.saveMessage(message.toEntity(loggedInUser.orElse(null)));
@@ -100,8 +105,11 @@ public class WebController {
 
 
     @GetMapping("update/{messageId}")
-    public String updateMessage(@PathVariable Long messageId, Model model) {
+    public String updateMessage(@PathVariable Long messageId, Model model, @AuthenticationPrincipal OAuth2User oauth2User) {
         Message message = messageService.findById(messageId).get();
+
+        String redirectUrl = redirectIfNotOwnerOrAdmin(oauth2User, message);
+        if (redirectUrl != null) return redirectUrl;
 
         CreateMessageFormData formData = new CreateMessageFormData(message.getMessageTitle(), message.getMessageBody(), message.isPublic());
         model.addAttribute("formData", formData);
@@ -110,10 +118,24 @@ public class WebController {
         return "update";
     }
 
+    private String redirectIfNotOwnerOrAdmin(OAuth2User oauth2User, Message message) {
+        if (oauth2User == null) {
+            return "redirect:/web/messages";
+        }
+
+        Integer githubId = oauth2User.getAttribute("id");
+        Optional<User> loggedInUser = userService.findByUserId(githubId);
+
+        if (!Objects.equals(message.getUser().getGitId(), githubId) && (loggedInUser.isEmpty() || !loggedInUser.get().getRole().equals("ROLE_ADMIN"))) {
+            return "redirect:/web/messages";
+        }
+        return null;
+    }
+
     @PostMapping("update/{messageId}")
     public String greetingSubmit(@PathVariable Long messageId, @Valid @ModelAttribute("formData") CreateMessageFormData message,
-                                BindingResult bindingResult,  @AuthenticationPrincipal OAuth2User oauth2User,
-                                Model model) {
+                                 BindingResult bindingResult, @AuthenticationPrincipal OAuth2User oauth2User,
+                                 Model model) {
         if (bindingResult.hasErrors()) {
             return "update";
         }
@@ -152,5 +174,5 @@ public class WebController {
 
         return "userMessages";
     }
-  
+
 }
