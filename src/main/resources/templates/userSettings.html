@@ -48,8 +48,8 @@
 <body>
 <div class="profile-container">
     <h1>User Profile</h1>
-    <img class="profile-img" th:src="${user.avatarUrl}" alt="Profile Picture">
-    <form id="profile-form" class="profile-form" method="post" action="/web/user/update">
+    <img class="profile-img" src="/images/profile.jpeg" alt="Profile Picture">
+    <form id="profile-form" class="profile-form" method="post" action="/web/user/update" enctype="multipart/form-data">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <label for="fullName">Full Name:</label>
         <input type="text" id="fullName" name="fullName" th:value="${user.fullName}" placeholder="Full Name">
@@ -60,6 +60,9 @@
         <label for="email">Email:</label>
         <input type="text" id="email" name="email" th:value="${user.email}" placeholder="Email">
         <br>
+        <label for="customProfilePicture">Upload Custom Avatar:</label>
+        <input type="file" id="customProfilePicture" name="customProfilePicture" accept="image/*">
+        <br>
         <input type="submit" value="Save">
     </form>
     <div class="button-container">
@@ -68,6 +71,7 @@
 </div>
 </body>
 </html>
+
 
 
 
