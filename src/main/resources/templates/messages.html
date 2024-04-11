@@ -42,13 +42,22 @@
             <th th:text="#{message.user}"></th>
             <th th:text="#{message.date}"></th>
             <th th:text="#{message.newdate}"></th>
+            <th th:text="#{message.translate}"></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="message : ${messages}">
             <td th:text="${message.messageTitle}">Title</td>
-            <td th:text="${message.messageBody}" class="message_body">Lorem ipsum</td>
-            <td th:text="${message.user.userName}">Jane Doe</td>
+            <td class="message_body">
+                <span th:text="${message.messageBody}"> </span>
+
+
+            </td>
+            <td>
+                <a th:href="@{/web/userMessages(userId=${message.user?.id})}">
+                    <span th:text="${message.user.userName}">Jane Doe</span>
+                </a>
+            </td>
             <td th:text="${message.createdDate}">2020-01-01</td>
             <td>
                     <span th:if="${message.lastModifiedDate != null}" th:text="${message.lastModifiedDate}
@@ -56,6 +65,14 @@
                 <p id="edit" th:if="${message.user?.id} == ${loggedInUser?.id}">
                     <a th:href="@{/web/update/{messageId}(messageId=${message.id})}" th:text="#{editmessage}"></a>
                 </p>
+            </td>
+            <td>
+                    <a th:if="${message.messageLanguage != null and message.messageLanguage.equals('sv')}"
+                       th:text="#{translatetoenglish}"
+                       th:href="@{/web/translation/{messageId}(messageId=${message.id})}"></a>
+                    <a th:if="${message.messageLanguage != null and message.messageLanguage.equals('en')}"
+                       th:text="#{translatetoswedish}"
+                       th:href="@{/web/translation/{messageId}(messageId=${message.id})}"></a>
             </td>
         </tr>
         </tbody>
