@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+  <title>Messages</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#locales").change(function () {
+        var selectedOption = $('#locales').val();
+        if (selectedOption != '') {
+          window.location.replace('translation?lang=' + selectedOption);
+        }
+      });
+    });
+  </script>
+  <style>
+    body {
+      padding: 3em;
+      font-family: "Calibri Light";
+    }
+
+    .content {
+      width: 90%;
+      margin: auto;
+      padding-top: 2em;
+    }
+
+    .menu {
+      text-align: right;
+    }
+
+
+    table, th, td {
+      table-layout: fixed;
+      border: 1px solid #ccc;
+      border-collapse: collapse;
+      vertical-align: top;
+    }
+
+    #edit {
+      padding: 0.3em 0 0 0;
+      margin: 0;
+    }
+
+    th, td {
+      padding: 15px;
+    }
+
+    .message_body {
+      width: 50%;
+      vertical-align: top;
+    }
+
+    th {
+      color: white;
+      text-align: left;
+      background-color: #04AA6D;
+
+    }
+  </style>
+</head>
+<body>
+<div class="menu">
+  <a id="logout_link" th:href="@{'/logout?lang=' + ${lang}}" th:text="#{logout}"></a>
+</div>
+<div class="content">
+  <h1 th:text="#{translatedmessage}">Welcome</h1>
+  <table>
+    <thead>
+    <tr>
+      <th th:text="#{message.title}"></th>
+      <th th:text="#{message.body}" class="message_body"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td th:text="${messageTitle}">Title</td>
+      <td th:text="${messageBody}" class="message_body">Lorem ipsum</td>
+    </tr>
+    </tbody>
+  </table>
+  <p>
+    <a th:href="@{/web/messages}" th:text="#{back}">Back</a>
+  </p>
+</div>
+</body>
+</html>

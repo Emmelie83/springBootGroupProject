@@ -2,14 +2,17 @@ package se.iths.springbootgroupproject;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+
 import org.springframework.data.domain.Pageable;
+
+import org.springframework.stereotype.Component;
+
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.entities.User;
 import se.iths.springbootgroupproject.repos.MessageRepository;
-import org.springframework.stereotype.Component;
 import se.iths.springbootgroupproject.repos.UserRepository;
+import se.iths.springbootgroupproject.services.MessageService;
 
-import java.time.LocalDate;
 import java.util.logging.Logger;
 @Component
 public class StartupRunner implements ApplicationRunner {
@@ -20,10 +23,13 @@ public class StartupRunner implements ApplicationRunner {
     private final MessageRepository messageRepository;
     private final UserRepository userRepository;
 
+    private final MessageService messageService;
+
     public StartupRunner(MessageRepository messageRepository,
-                         UserRepository userRepository) {
+                         UserRepository userRepository, MessageService messageService) {
         this.messageRepository = messageRepository;
         this.userRepository = userRepository;
+        this.messageService = messageService;
     }
 
 
@@ -66,6 +72,6 @@ public class StartupRunner implements ApplicationRunner {
         message.setUser(user);
         message.setPublic(isPublic);
 
-        messageRepository.save(message);
+        messageService.saveMessage(message);
     }
 }
