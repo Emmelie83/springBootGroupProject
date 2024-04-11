@@ -4,7 +4,7 @@ body {
 }
 
 .content {
-    width: 90%;
+    width: 95%;
     margin: auto;
     padding-top: 2em;
 }
@@ -31,7 +31,7 @@ th, td {
 }
 
 .message_body {
-    width: 50%;
+    width: 35%;
     vertical-align: top;
 }
 
@@ -54,11 +54,19 @@ th {
     margin-left: 1em;
 }
 
+#back_to_messagelist {
+    padding-top: 1.5em;
+}
+
 #home {
     text-align: center;
 }
 
-input[type=button], input[type=submit], input[type=reset] {
+.checkbox {
+    padding-bottom: 1.5em;
+}
+
+input[type=button], input[type=submit], input[type=reset], button {
     background-color: #04AA6D;
     border: none;
     color: white;
@@ -66,7 +74,7 @@ input[type=button], input[type=submit], input[type=reset] {
     margin: 4px
 }
 
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, button:hover {
     background-color: #f2f2f2;
     color: black;
     border: 1px solid #ccc;
@@ -81,6 +89,14 @@ input[type=text], #messageBody {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+#pagination_buttons {
+    margin-top: 1.5em;
+}
+
+#prev_button {
+    margin-left: 0;
 }
 
 

@@ -2,9 +2,14 @@ package se.iths.springbootgroupproject.services;
 
 import jakarta.persistence.EntityNotFoundException;
 
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.access.prepost.PreFilter;
+
 import org.springframework.stereotype.Service;
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.entities.PublicMessage;
@@ -18,9 +23,11 @@ import java.util.Optional;
 public class MessageService {
 
     MessageRepository messageRepository;
+    TranslationService translationService;
 
-    public MessageService(MessageRepository messageRepository) {
+    public MessageService(MessageRepository messageRepository, TranslationService translationService) {
         this.messageRepository = messageRepository;
+        this.translationService = translationService;
     }
 
     //    @PreAuthorize("#updateMessage.user.getId() == authentication.principal.id")
@@ -47,18 +54,19 @@ public class MessageService {
 
         existingMessage.setPublic(updateMessage.isPublic());
 
-        return messageRepository.save(existingMessage);
+        return saveMessage(existingMessage);
     }
 
 
     public Message saveMessage(Message message) {
-
+        String language = translationService.detectMessageLanguage(message.getMessageBody());
+        message.setMessageLanguage(language);
         messageRepository.save(message);
         return message;
     }
 
-    public List<Message> findAllBy() {
-        return messageRepository.findAllBy();
+    public Page<Message> findAllBy(Pageable pageable) {
+        return messageRepository.findAllBy(pageable);
     }
 
     public List<PublicMessage> findAllByPrivateMessageIsFalse() {
@@ -68,5 +76,23 @@ public class MessageService {
     public Optional<Message> findById(Long id) {
         return messageRepository.findById(id);
     }
+
+    public List<Message> fidAllByUserId(Long userId) {
+        return messageRepository.findAllByUserId(userId);
+    }
+
+    public Page<Message> findPaginatedMessages(Pageable pageable) {
+
+        return messageRepository.findAllBy(pageable);
+    }
+
+
+//    public Message translateMessage(Message message) {
+//        String translatedTitle = translationService.translateText(message.getMessageTitle());
+//        message.setMessageTitle(translatedTitle);
+//        String translatedBody = translationService.translateText(message.getMessageBody());
+//        message.setMessageBody(translatedBody);
+//        return message;
+//    }
 
 }

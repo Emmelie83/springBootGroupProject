@@ -2,13 +2,17 @@ package se.iths.springbootgroupproject;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+
+import org.springframework.data.domain.Pageable;
+
+import org.springframework.stereotype.Component;
+
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.entities.User;
 import se.iths.springbootgroupproject.repos.MessageRepository;
-import org.springframework.stereotype.Component;
 import se.iths.springbootgroupproject.repos.UserRepository;
+import se.iths.springbootgroupproject.services.MessageService;
 
-import java.time.LocalDate;
 import java.util.logging.Logger;
 @Component
 public class StartupRunner implements ApplicationRunner {
@@ -19,10 +23,13 @@ public class StartupRunner implements ApplicationRunner {
     private final MessageRepository messageRepository;
     private final UserRepository userRepository;
 
+    private final MessageService messageService;
+
     public StartupRunner(MessageRepository messageRepository,
-                         UserRepository userRepository) {
+                         UserRepository userRepository, MessageService messageService) {
         this.messageRepository = messageRepository;
         this.userRepository = userRepository;
+        this.messageService = messageService;
     }
 
 
@@ -30,12 +37,12 @@ public class StartupRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         LOG.info("Checking for Message");
 
-        if (messageRepository.findAllBy().isEmpty()) {
+        if (messageRepository.findAllBy(Pageable.unpaged()).isEmpty()) {
             LOG.info("Messages not found. Creating Messages");
 
             saveMessage("Eini", "Eini Enhörning", "eini@eteam.com","ROLE_USER", createMessage("Öl är gott", "Utan öl i tio dagar försmäktar jag i detta öde land."), true);
             saveMessage("Harry", "Harry Hare", "harry@eteam.com","ROLE_GUEST", createMessage("Drinking beer in the sun", "Spring is here and we are drinking beer in the sun."), true);
-            saveMessage("Säli", "Säli Bukowski", "säli@eteam.com","ROLE_GUEST", createMessage("Svensk öl", "Här i Sverige måste vi gå till Systembolaget om vi vill dricka öl. Eller så dricker vi jättedyr öl på krogen."), true);
+            saveMessage("Säli", "Säli Bukowski", "säli@eteam.com","ROLE_GUEST", createMessage("Svensk öl", "Här i Sverige är ölen svindyr. Precis som all annan alkohol."), true);
             saveMessage("Honey Bear", "Bear Brinkel", "bear@eteam.com", "ROLE_GUEST", createMessage("I don't like beer", "Why are you all writing about beer? I don't even like beer. I want to drink tea with honey."), true);
             saveMessage("Esi", "Esi Esel", "esi@eteam.com","ROLE_USER", createMessage("För liten för öl", "Jag är alldeles för liten för att dricka öl."), false);
             saveMessage("Eini", "Eini Enhörning", "eini@eteam.com","ROLE_USER", createMessage("Öl är livet", "Jag kommer att lära dig att dricka öl, Esi. Öl är livet!"), false);
@@ -65,6 +72,6 @@ public class StartupRunner implements ApplicationRunner {
         message.setUser(user);
         message.setPublic(isPublic);
 
-        messageRepository.save(message);
+        messageService.saveMessage(message);
     }
 }

@@ -33,15 +33,18 @@
 
     <form th:action="@{'/web/update/' + ${messageId}}" th:object="${formData}" method="POST">
         <input type="hidden" id="messageId" name="messageId" th:value="${messageId}"/>
-            <input id="messageTitle" type="text" th:field="*{messageTitle}" th:value="${originalMessage.messageTitle}"/>
+        <input id="messageTitle" type="text" th:field="*{messageTitle}" th:value="${originalMessage.messageTitle}"/>
         <p th:if="${#fields.hasErrors('messageTitle')}"
            th:text="${#strings.listJoin(#fields.errors('messageTitle'), ', ')}"></p>
         <br><br>
-            <textarea id="messageBody" th:field="*{messageBody}" cols="100" rows="6"
-                      th:value="${originalMessage.messageBody}"></textarea>
+        <textarea id="messageBody" th:field="*{messageBody}" cols="100" rows="6"
+                  th:value="${originalMessage.messageBody}"></textarea>
         <p th:if="${#fields.hasErrors('messageBody')}"
            th:text="${#strings.listJoin(#fields.errors('messageBody'), ', ')}"></p>
-
+        <p class="checkbox">
+            <input type="checkbox" th:field="*{makePublic}" id="makePublic"/>
+            <label for="makePublic" th:text="#{makepublic}">Make Public</label>
+        </p>
         <p><input type="submit" th:value="#{update}"/> <input type="reset" th:value="#{reset}"/></p>
     </form>
 </div>
