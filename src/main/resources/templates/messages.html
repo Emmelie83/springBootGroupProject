@@ -67,42 +67,42 @@
 </div>
 
 <script>
-    // Variables for pagination
-    let currentPage = 0; // Initial page number
-    const totalPages = 3; // Total number of pages
 
-    // Update page number
+    let currentPage = 0;
+    const totalPages = 3;
+
+
     function updatePageNumber() {
         document.getElementById('pageNumber').textContent = currentPage;
     }
 
-    // Function to handle navigation to next page
+
     function nextPage() {
         if (currentPage < totalPages) {
             currentPage++;
             updatePageNumber();
-            // Update page URL
+
             window.location.href = "?page=" + currentPage;
         }
     }
 
-    // Function to handle navigation to previous page
+
     function previousPage() {
         if (currentPage > 1) {
             currentPage--;
             updatePageNumber();
-            // Update page URL
+
             window.location.href = "?page=" + currentPage;
         }
     }
 
-    // Event listener for next button
+
     document.getElementById('nextButton').addEventListener('click', nextPage);
 
-    // Event listener for previous button
+
     document.getElementById('prevButton').addEventListener('click', previousPage);
 
-    // Update page number immediately when the page loads
+
     const urlParams = new URLSearchParams(window.location.search);
     const pageParam = urlParams.get('page');
     if (pageParam !== null && !isNaN(pageParam) && pageParam > 0 && pageParam <= totalPages) {
