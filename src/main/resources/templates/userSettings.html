@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <style>
+        .profile-container {
+            margin: 50px auto;
+            width: 50%;
+            text-align: center;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+        }
+        .profile-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .profile-form input[type="text"],
+        .profile-form input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .profile-form input[type="submit"],
+        .back-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .feedback-message {
+            margin-top: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<div class="profile-container">
+    <h1>User Profile</h1>
+    <img class="profile-img" src="/images/profile.jpeg" alt="Profile Picture">
+    <form id="profile-form" class="profile-form" method="post" action="/web/user/update" enctype="multipart/form-data">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" th:value="${user.fullName}" placeholder="Full Name">
+        <br>
+        <label for="userName">Username:</label>
+        <input type="text" id="userName" name="userName" th:value="${user.userName}" placeholder="Username">
+        <br>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" th:value="${user.email}" placeholder="Email">
+        <br>
+        <label for="customProfilePicture">Upload Custom Avatar:</label>
+        <input type="file" id="customProfilePicture" name="customProfilePicture" accept="image/*">
+        <br>
+        <input type="submit" value="Save">
+    </form>
+    <div class="button-container">
+        <a href="/web/messages" class="back-button">Back</a>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+

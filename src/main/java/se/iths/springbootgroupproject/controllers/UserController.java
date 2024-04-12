@@ -1,12 +1,15 @@
 package se.iths.springbootgroupproject.controllers;
 
+import ch.qos.logback.core.model.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.HtmlUtils;
-import se.iths.springbootgroupproject.entities.Message;
-import se.iths.springbootgroupproject.repos.UserRepository;
+import org.springframework.web.servlet.ModelAndView;
 import se.iths.springbootgroupproject.entities.User;
+import se.iths.springbootgroupproject.repos.UserRepository;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -36,9 +39,14 @@ public class UserController {
     public User createUser(@RequestBody User user) {
         return userRepository.save(user);
     }
+
     @PutMapping("/users/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User user) {
         user.getId();
         return userRepository.save(user);
     }
 }
+
+
+
+
