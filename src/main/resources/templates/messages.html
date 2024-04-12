@@ -4,27 +4,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <title>Messages</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#locales").change(function () {
-                var selectedOption = $('#locales').val();
-                if (selectedOption != '') {
-                    window.location.replace('messages?lang=' + selectedOption);
-                }
-            });
-        });
-    </script>
 </head>
 <body>
 <div class="menu">
-    <span th:text="#{lang.change}"></span>:
-    <select id="locales">
-        <option value=""></option>
-        <option value="en">English</option>
-        <option value="sv">Svenska</option>
-    </select>
-    <a id="logout_link" th:href="@{'/logout?lang=' + ${lang}}" th:text="#{logout}"></a>
+    <a class="menu_link" th:href="@{'/swagger-ui/index.html'}">Endpoints</a>
+    <a class="menu_link" th:href="@{${httpServletRequest.requestURI} + '?page=' + ${page} + '&lang=en'}">English</a>
+    <a class="menu_link" th:href="@{${httpServletRequest.requestURI} + '?page=' + ${page} + '&lang=sv'}">Svenska</a>
+    <a class="menu_link" id="logout_link" th:href="'/logout'" th:text="#{logout}"></a>
 </div>
 
 <h1 th:text="#{greeting}" id="home">Welcome</h1>
@@ -60,30 +46,31 @@
             </td>
             <td th:text="${message.createdDate}">2020-01-01</td>
             <td>
-                <span th:if="${message.lastModifiedDate != null}" th:text="${message.lastModifiedDate} + ' ' + #{editedby} + ': ' + ${message.lastModifiedBy}"></span>
+                <span th:if="${message.lastModifiedDate != null}"
+                      th:text="${message.lastModifiedDate} + ' ' + #{editedby} + ': ' + ${message.lastModifiedBy}"></span>
                 <p id="edit" th:if="${message.user?.id} == ${loggedInUser?.id}">
                     <a th:href="@{/web/update/{messageId}(messageId=${message.id})}" th:text="#{editmessage}"></a>
                 </p>
             </td>
             <td>
-                    <a th:if="${message.messageLanguage != null and message.messageLanguage.equals('sv')}"
-                       th:text="#{translatetoenglish}"
-                       th:href="@{/web/translation/{messageId}(messageId=${message.id})}"></a>
-                    <a th:if="${message.messageLanguage != null and message.messageLanguage.equals('en')}"
-                       th:text="#{translatetoswedish}"
-                       th:href="@{/web/translation/{messageId}(messageId=${message.id})}"></a>
+                <a th:if="${message.messageLanguage != null and message.messageLanguage.equals('sv')}"
+                   th:text="#{translatetoenglish}"
+                   th:href="@{/web/translation/{messageId}(messageId=${message.id})}"></a>
+                <a th:if="${message.messageLanguage != null and message.messageLanguage.equals('en')}"
+                   th:text="#{translatetoswedish}"
+                   th:href="@{/web/translation/{messageId}(messageId=${message.id})}"></a>
             </td>
         </tr>
         </tbody>
     </table>
     <p th:unless="${not messages.isEmpty()}">No messages found.</p>
     <p id="pagination_buttons">
-        <p>
+    <p>
         <span th:text="#{page} + ': '"></span>
-        <span  id="page_number"></span>
+        <span id="page_number"></span>
     </p>
-        <button id="prev_button">Previous</button>
-        <button id="next_button">Next</button>
+    <button id="prev_button">Previous</button>
+    <button id="next_button">Next</button>
     </p>
 </div>
 <script>
@@ -97,10 +84,10 @@
 
 
     function nextPage() {
-            currentPage++;
-            updatePageNumber();
+        currentPage++;
+        updatePageNumber();
 
-            window.location.href = "?page=" + currentPage;
+        window.location.href = "?page=" + currentPage;
     }
 
 
