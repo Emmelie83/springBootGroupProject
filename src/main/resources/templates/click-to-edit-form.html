@@ -1,0 +1,14 @@
+<tr hx-trigger='cancel' class='editing' th:attr="hx-get='/web/messages/' + ${message.id} + '?page=' + ${page}">
+    <td><input name="Title" type="text" th:value="${message.getMessageTitle()}"/>
+        <checkbox name="makePublic" type="checkbox" th:checked="${message.isPublic()}"></checkbox>
+    </td>
+    <td><input name="Message Body" type="text" th:value="${message.getMessageBody()}"/></td>
+    <td>
+        <button class="btn btn-danger" th:attr="hx-get='/web/messages/' + ${message.id} + '?page=' + ${page}">
+            Cancel
+        </button>
+        <button class="btn btn-danger" th:attr="hx-patch='/web/messages/' + ${message.id} + '?page=' + ${page}" hx-include="closest tr">
+            Save
+        </button>
+    </td>
+</tr>

@@ -11,9 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import se.iths.springbootgroupproject.CreateMessageFormData;
 import se.iths.springbootgroupproject.entities.Message;
 import se.iths.springbootgroupproject.entities.User;
+import se.iths.springbootgroupproject.repos.MessageRepository;
 import se.iths.springbootgroupproject.services.MessageService;
 import se.iths.springbootgroupproject.services.TranslationService;
 import se.iths.springbootgroupproject.services.UserService;
@@ -28,11 +30,13 @@ public class WebController {
     MessageService messageService;
     UserService userService;
     TranslationService translationService;
+    MessageRepository messageRepository;
 
-    public WebController(MessageService messageService, UserService userService, TranslationService translationService) {
+    public WebController(MessageService messageService, UserService userService, TranslationService translationService, MessageRepository messageRepository) {
         this.messageService = messageService;
         this.userService = userService;
         this.translationService = translationService;
+        this.messageRepository = messageRepository;
     }
 
     @GetMapping("messages")
@@ -178,4 +182,41 @@ public class WebController {
         return "userMessages";
     }
 
+    @GetMapping("/messages/{id}")
+    public String oneMessage(@PathVariable Long id, Model model,
+                             @AuthenticationPrincipal OAuth2User oauth2User,
+                             @RequestParam("page") int page) {
+        var message = messageRepository.findById(id).get();
+        if (oauth2User != null) {
+            Integer githubId = oauth2User.getAttribute("id");
+            Optional<User> loggedInUser = userService.findByUserId(githubId);
+            loggedInUser.ifPresent(user -> model.addAttribute("loggedInUser", user));
+        }
+
+        model.addAttribute("message", message);
+        model.addAttribute("id", id);
+        model.addAttribute("page", page);
+
+        return "click-to-edit-default";
+    }
+
+    @PostMapping("/messages/{id}/edit/?page={page}")
+    public String editForm(Model model, @PathVariable Long id,
+                           @PathVariable int page) {
+        var message = messageRepository.findById(id).get();
+        model.addAttribute("message", message);
+        model.addAttribute("id", id);
+        model.addAttribute("page", page);
+        return "click-to-edit-form";
+    }
+
+    @PatchMapping("/messages/{id}")
+    public String editPost(@ModelAttribute Message message, Model model,
+                           @RequestParam("page") int page,
+                           RedirectAttributes redirectAttributes) {
+        messageRepository.save(message);
+
+        redirectAttributes.addAttribute("page", page);
+        return "click-to-edit-default";
+    }
 }

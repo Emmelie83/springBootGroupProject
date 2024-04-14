@@ -48,11 +48,12 @@
                 <span th:if="${message.lastModifiedDate != null}"
                       th:text="${message.lastModifiedDate} + ' ' + #{editedby} + ': ' + ${message.lastModifiedBy}"></span>
                 <p id="edit" th:if="${message.user?.id} == ${loggedInUser?.id}">
-                    <a href="#" hx-post="/web/messages/' + ${message.id} + '/edit'"
-                       hx-trigger="edit"
-                       hx-ext="data-th-text" data-th-text="#{editmessage}"
-                       onclick="let editing = document.querySelector('.editing');
-                       if (editing) {
+                    <button class="btn btn-danger"
+                            th:attr="hx-post='/web/messages/' + ${message.id} + '/edit?page=' + ${page}"
+                            hx-trigger="edit"
+                            hx-ext="data-th-text" data-th-text="#{editmessage}"
+                            onclick="let editing = document.querySelector('.editing');
+                    if (editing) {
                         Swal.fire({
                             title: 'Already Editing',
                             showCancelButton: true,
@@ -62,13 +63,13 @@
                             if (result.isConfirmed) {
                                 htmx.trigger(editing, 'cancel');
                                 htmx.trigger(this, 'edit');
-                                }
-                                        });
-                            } else {
-                                htmx.trigger(this, 'edit');
-                            }">
+                            }
+                        });
+                    } else {
+                        htmx.trigger(this, 'edit');
+                    }">
                         Edit
-                    </a>
+                    </button>
                 </p>
             </td>
             <td>

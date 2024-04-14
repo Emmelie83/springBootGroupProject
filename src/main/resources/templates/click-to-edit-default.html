@@ -1,0 +1,48 @@
+<tr>
+    <td th:text="${message.messageTitle}">Title</td>
+    <td class="message_body">
+        <span th:text="${message.messageBody}"> </span>
+    </td>
+    <td>
+        <a th:href="@{/web/userMessages(userId=${message.user?.id})}">
+            <span th:text="${message.user.userName}">Jane Doe</span>
+        </a>
+    </td>
+    <td th:text="${message.createdDate}">2020-01-01</td>
+    <td>
+                <span th:if="${message.lastModifiedDate != null}"
+                      th:text="${message.lastModifiedDate} + ' ' + #{editedby} + ': ' + ${message.lastModifiedBy}"></span>
+        <p id="edit" th:if="${message.user?.id} == ${loggedInUser?.id}">
+            <button class="btn btn-danger"
+                    th:attr="hx-post='/web/messages/' + ${message.id} + '/edit?page=' + ${page}"
+                    hx-trigger="edit"
+                    hx-ext="data-th-text" data-th-text="#{editmessage}"
+                    onclick="let editing = document.querySelector('.editing');
+                    if (editing) {
+                        Swal.fire({
+                            title: 'Already Editing',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yep, Edit This Row!',
+                            text: 'Hey! You are already editing a row! Do you want to cancel that edit and continue?'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                htmx.trigger(editing, 'cancel');
+                                htmx.trigger(this, 'edit');
+                            }
+                        });
+                    } else {
+                        htmx.trigger(this, 'edit');
+                    }">
+                Edit
+            </button>
+        </p>
+    </td>
+    <td>
+        <a th:if="${message.messageLanguage != null and message.messageLanguage.equals('sv')}"
+           th:text="#{translatetoenglish}"
+           th:href="@{/web/translation/{messageId}(messageId=${message.id})}"></a>
+        <a th:if="${message.messageLanguage != null and message.messageLanguage.equals('en')}"
+           th:text="#{translatetoswedish}"
+           th:href="@{/web/translation/{messageId}(messageId=${message.id})}"></a>
+    </td>
+</tr>
