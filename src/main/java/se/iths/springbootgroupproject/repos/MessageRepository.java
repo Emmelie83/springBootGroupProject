@@ -11,7 +11,7 @@ import se.iths.springbootgroupproject.entities.PublicMessage;
 import java.util.List;
 
 
-public interface MessageRepository extends PagingAndSortingRepository<Message, Long>,ListCrudRepository<Message, Long> {
+public interface MessageRepository extends ListPagingAndSortingRepository<Message, Long>, PagingAndSortingRepository<Message, Long>,ListCrudRepository<Message, Long> {
     Page<Message> findAllBy(Pageable pageable);
 
     List<PublicMessage> findAllByIsPublicIsTrue();
