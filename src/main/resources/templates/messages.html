@@ -32,13 +32,11 @@
         </tr>
         </thead>
 
-        <tbody>
+        <tbody hx-target="closest tr" hx-swap="outerHTML">
         <tr th:each="message : ${messages}">
             <td th:text="${message.messageTitle}">Title</td>
             <td class="message_body">
                 <span th:text="${message.messageBody}"> </span>
-
-
             </td>
             <td>
                 <a th:href="@{/web/userMessages(userId=${message.user?.id})}">
@@ -50,7 +48,27 @@
                 <span th:if="${message.lastModifiedDate != null}"
                       th:text="${message.lastModifiedDate} + ' ' + #{editedby} + ': ' + ${message.lastModifiedBy}"></span>
                 <p id="edit" th:if="${message.user?.id} == ${loggedInUser?.id}">
-                    <a th:href="@{/web/update/{messageId}(messageId=${message.id})}" th:text="#{editmessage}"></a>
+                    <a href="#" hx-post="/web/messages/' + ${message.id} + '/edit'"
+                       hx-trigger="edit"
+                       hx-ext="data-th-text" data-th-text="#{editmessage}"
+                       onclick="let editing = document.querySelector('.editing');
+                       if (editing) {
+                        Swal.fire({
+                            title: 'Already Editing',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yep, Edit This Row!',
+                            text: 'Hey! You are already editing a row! Do you want to cancel that edit and continue?'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                htmx.trigger(editing, 'cancel');
+                                htmx.trigger(this, 'edit');
+                                }
+                                        });
+                            } else {
+                                htmx.trigger(this, 'edit');
+                            }">
+                        Edit
+                    </a>
                 </p>
             </td>
             <td>

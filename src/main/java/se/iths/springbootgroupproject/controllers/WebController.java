@@ -37,7 +37,7 @@ public class WebController {
 
     @GetMapping("messages")
     public String getMessages(Model model, Principal principal, HttpServletRequest httpServletRequest, @AuthenticationPrincipal OAuth2User oauth2User,
-                              @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
+                              @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
 
         if (page < 0) page = 0;
         Pageable pageable = PageRequest.of(page, size);
