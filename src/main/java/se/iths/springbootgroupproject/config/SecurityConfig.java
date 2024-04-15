@@ -28,8 +28,7 @@ public class SecurityConfig {
                 )
                 .logout(logout ->
                         logout.logoutSuccessUrl("/home")
-                )
-                .csrf(csrf -> csrf.disable());
+                );
         return http.build();
     }
 

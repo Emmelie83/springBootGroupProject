@@ -12,30 +12,14 @@
     <td>
                 <span th:if="${message.lastModifiedDate != null}"
                       th:text="${message.lastModifiedDate} + ' ' + #{editedby} + ': ' + ${message.lastModifiedBy}"></span>
-        <p id="edit" th:if="${message.user?.id} == ${loggedInUser?.id}">
-            <button class="btn btn-danger"
-                    th:attr="hx-post='/web/messages/' + ${message.id} + '/edit?page=' + ${page}"
-                    hx-trigger="edit"
-                    hx-ext="data-th-text" data-th-text="#{editmessage}"
-                    onclick="let editing = document.querySelector('.editing');
-                    if (editing) {
-                        Swal.fire({
-                            title: 'Already Editing',
-                            showCancelButton: true,
-                            confirmButtonText: 'Yep, Edit This Row!',
-                            text: 'Hey! You are already editing a row! Do you want to cancel that edit and continue?'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                htmx.trigger(editing, 'cancel');
-                                htmx.trigger(this, 'edit');
-                            }
-                        });
-                    } else {
-                        htmx.trigger(this, 'edit');
-                    }">
-                Edit
-            </button>
-        </p>
+        <div th:if="${message.user?.id} == ${loggedInUser?.id}">
+            <form th:action="@{/web/messages/{id}/edit(page=${page}, id=${message.id})}" method="post"
+                  th:attr="hx-post='/web/messages/' + ${message.id} + '/edit?page=' + ${page}">
+                <button class="btn btn-danger" type="submit">
+                    Edit
+                </button>
+            </form>
+        </div>
     </td>
     <td>
         <a th:if="${message.messageLanguage != null and message.messageLanguage.equals('sv')}"
