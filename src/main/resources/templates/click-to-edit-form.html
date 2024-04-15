@@ -11,11 +11,13 @@
         </label>
     </td>
     <td>
-        <button class="btn btn-danger" th:attr="hx-get='/web/messages/' + ${message.id} + '?page=' + ${page}">
+        <button class="btn btn-danger" th:attr="hx-get='/web/messages/' + ${message.id} + '?page=' + ${page}"
+                hx-ext="data-th-text" data-th-text="#{cancel}">
             Avbryt
         </button>
         <form th:action="@{/web/messages/{id}/edit(page=${page}, id=${message.id})}" method="post">
-        <button class="btn btn-danger" th:attr="hx-put='/web/messages/' + ${message.id} + '?page=' + ${page}" hx-include="closest tr" hx-target="closest tr">
+        <button class="btn btn-danger" th:attr="hx-put='/web/messages/' + ${message.id} + '?page=' + ${page}"
+                hx-include="closest tr" hx-target="closest tr" hx-ext="data-th-text" data-th-text="#{update.message}">
             Spara
         </button>
         </form>

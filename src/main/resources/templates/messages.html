@@ -51,7 +51,7 @@
                 <div th:if="${message.user?.id} == ${loggedInUser?.id}">
                     <form th:action="@{/web/messages/{id}/edit(page=${page}, id=${message.id})}" method="post"
                           th:attr="hx-post='/web/messages/' + ${message.id} + '/edit?page=' + ${page}">
-                        <button class="btn btn-danger" type="submit">
+                        <button class="btn btn-danger" type="submit" hx-ext="data-th-text" data-th-text="#{editmessage}">
                             Edit
                         </button>
                     </form>
