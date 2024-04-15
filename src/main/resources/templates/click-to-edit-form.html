@@ -1,21 +1,21 @@
 <tr hx-trigger='cancel' class='editing' th:attr="hx-get='/web/messages/' + ${message.id} + '?page=' + ${page}">
-    <td><label>
-        <input name="messageTitle" type="text" th:value="${message.messageTitle}"/>
-    </label></td>
-    <td><label>
-        <input name="messageBody" type="text" th:value="${message.messageBody}"/>
-    </label></td>
-<!--    <td>-->
-<!--        <label>-->
-<!--            <input type="checkbox" name="makePublic" th:checked="*{message.isPublic}"/>-->
-<!--            <span th:text="#{makepublic}">Make Public</span></label>-->
-<!--    </td>-->
+    <td>
+        <label><input name="messageTitle" type="text" th:value="${message.messageTitle}"/></label>
+    </td>
+    <td><label><input name="messageBody" type="text" th:value="${message.messageBody}"/></label>
+    </td>
+    <td>
+        <label>
+            <input type="checkbox" name="isPublic" th:checked="${message.isPublic}"/>
+            <span th:text="#{makepublic}"></span>
+        </label>
+    </td>
     <td>
         <button class="btn btn-danger" th:attr="hx-get='/web/messages/' + ${message.id} + '?page=' + ${page}">
-            Cancel
+            Avbryt
         </button>
         <button class="btn btn-danger" th:attr="hx-put='/web/messages/' + ${message.id} + '?page=' + ${page}" hx-include="closest tr" hx-target="closest tr">
-            Save
+            Spara
         </button>
     </td>
 </tr>

@@ -30,7 +30,6 @@ public class MessageService {
         this.translationService = translationService;
     }
 
-    //    @PreAuthorize("#updateMessage.user.getId() == authentication.principal.id")
     public Message updateMessage(Long id, Message updateMessage) {
         Message existingMessage = messageRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Message not found with id: " + id));
         if (updateMessage.getCreatedDate() != null) {

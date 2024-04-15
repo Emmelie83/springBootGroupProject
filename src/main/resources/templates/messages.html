@@ -34,6 +34,7 @@
 
         <tbody hx-target="closest tr" hx-swap="outerHTML">
         <tr th:each="message : ${messages}">
+
             <td th:text="${message.messageTitle}">Title</td>
             <td class="message_body">
                 <span th:text="${message.messageBody}"> </span>

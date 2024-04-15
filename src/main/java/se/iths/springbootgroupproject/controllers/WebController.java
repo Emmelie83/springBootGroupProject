@@ -1,5 +1,6 @@
 package se.iths.springbootgroupproject.controllers;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -212,16 +213,18 @@ public class WebController {
 
     @PutMapping("/messages/{id}")
     public String editPost(@ModelAttribute Message message, Model model,
-                           @RequestParam("page") int page) {
-//        messageService.findById(message.getId()).ifPresent(oldMessage -> {
-//            oldMessage.setMessageTitle(message.getMessageTitle());
-//            oldMessage.setMessageBody(message.getMessageBody());
-//            oldMessage.setPublic(message.isPublic());
-//
-//            messageService.updateMessage(message.getId(), oldMessage);
-//        });
+                           @RequestParam("page") int page,
+                           @RequestParam(name = "isPublic", defaultValue = "false") boolean isPublic,
+                           @PathVariable Long id) {
+        Message existingMessage = messageRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Message not found with id: " + id));
 
-         messageService.updateMessage(message.getId(), message);
+        existingMessage.setMessageTitle(message.getMessageTitle());
+        existingMessage.setMessageBody(message.getMessageBody());
+        existingMessage.setPublic(isPublic);
+
+
+         messageService.updateMessage(message.getId(), existingMessage);
 
         return "click-to-edit-default";
     }
