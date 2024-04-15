@@ -1,8 +1,9 @@
 <tr hx-trigger='cancel' class='editing' th:attr="hx-get='/web/messages/' + ${message.id} + '?page=' + ${page}">
     <td>
-        <label><input name="messageTitle" type="text" th:value="${message.messageTitle}"/></label>
+        <label><input name="messageTitle" type="text" th:value="${message.messageTitle}" style="width: 200px;"/></label>
     </td>
-    <td><label><input name="messageBody" type="text" th:value="${message.messageBody}"/></label>
+    <td>
+         <label><textarea name="messageBody" rows="4" cols="50" th:text="${message.messageBody}"></textarea></label>
     </td>
     <td>
         <label>
@@ -13,12 +14,14 @@
     <td>
         <button class="btn btn-danger" th:attr="hx-get='/web/messages/' + ${message.id} + '?page=' + ${page}"
                 hx-ext="data-th-text" data-th-text="#{cancel}">
-            Avbryt
+            Cancel
         </button>
+    </td>
+    <td>
         <form th:action="@{/web/messages/{id}/edit(page=${page}, id=${message.id})}" method="post">
         <button class="btn btn-danger" th:attr="hx-put='/web/messages/' + ${message.id} + '?page=' + ${page}"
-                hx-include="closest tr" hx-target="closest tr" hx-ext="data-th-text" data-th-text="#{update.message}">
-            Spara
+                hx-include="closest tr" hx-ext="data-th-text" data-th-text="#{update.message}">
+            Save
         </button>
         </form>
     </td>
