@@ -3,6 +3,8 @@ package se.iths.springbootgroupproject.controllers;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -224,8 +226,10 @@ public class WebController {
         existingMessage.setPublic(isPublic);
 
 
-         messageService.updateMessage(message.getId(), existingMessage);
+        messageService.updateMessage(message.getId(), existingMessage);
 
+        Logger logger = LoggerFactory.getLogger(WebController.class);
+        logger.info("Returning template: click-to-edit-default");
         return "click-to-edit-default";
     }
 }
