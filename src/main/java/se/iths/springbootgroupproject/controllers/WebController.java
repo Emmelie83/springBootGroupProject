@@ -200,9 +200,9 @@ public class WebController {
         return "click-to-edit-default";
     }
 
-    @PostMapping("/messages/{id}/edit/?page={page}")
+    @PostMapping("/messages/{id}/edit")
     public String editForm(Model model, @PathVariable Long id,
-                           @PathVariable int page) {
+                           @RequestParam("page") int page) {
         var message = messageRepository.findById(id).get();
         model.addAttribute("message", message);
         model.addAttribute("id", id);
@@ -210,13 +210,19 @@ public class WebController {
         return "click-to-edit-form";
     }
 
-    @PatchMapping("/messages/{id}")
+    @PutMapping("/messages/{id}")
     public String editPost(@ModelAttribute Message message, Model model,
-                           @RequestParam("page") int page,
-                           RedirectAttributes redirectAttributes) {
-        messageRepository.save(message);
+                           @RequestParam("page") int page) {
+//        messageService.findById(message.getId()).ifPresent(oldMessage -> {
+//            oldMessage.setMessageTitle(message.getMessageTitle());
+//            oldMessage.setMessageBody(message.getMessageBody());
+//            oldMessage.setPublic(message.isPublic());
+//
+//            messageService.updateMessage(message.getId(), oldMessage);
+//        });
 
-        redirectAttributes.addAttribute("page", page);
+         messageService.updateMessage(message.getId(), message);
+
         return "click-to-edit-default";
     }
 }

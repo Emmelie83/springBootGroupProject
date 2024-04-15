@@ -17,6 +17,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain web(HttpSecurity http) throws Exception {
         http
+
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/login", "/oauth/**", "/logout", "/error**", "/web/publicMessages", "/home").permitAll()
 
@@ -27,7 +28,8 @@ public class SecurityConfig {
                 )
                 .logout(logout ->
                         logout.logoutSuccessUrl("/home")
-                );
+                )
+                .csrf(csrf -> csrf.disable());
         return http.build();
     }
 
