@@ -21,7 +21,7 @@
         <form th:action="@{/web/messages/{id}/edit(page=${page}, id=${message.id})}" method="post" >
         <button class="btn btn-danger" th:attr="hx-put='/web/messages/' + ${message.id} + '?page=' + ${page}"
                 hx-include="closest tr" hx-ext="data-th-text" data-th-text="#{update.message}">
-            Save
+            Update
         </button>
         </form>
     </td>

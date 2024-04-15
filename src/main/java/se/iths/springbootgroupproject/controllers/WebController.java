@@ -214,22 +214,32 @@ public class WebController {
     }
 
     @PutMapping("/messages/{id}")
-    public String editPost(@ModelAttribute Message message, Model model,
-                           @RequestParam("page") int page,
-                           @RequestParam(name = "isPublic", defaultValue = "false") boolean isPublic,
-                           @PathVariable Long id) {
-        Message existingMessage = messageRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Message not found with id: " + id));
+public String editPost(@ModelAttribute Message message, Model model,
+                       @AuthenticationPrincipal OAuth2User oauth2User,
+                       @RequestParam("page") int page,
+                       @RequestParam(name = "isPublic", defaultValue = "false") boolean isPublic,
+                       @PathVariable Long id) {
+    Message existingMessage = messageRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Message not found with id: " + id));
 
-        existingMessage.setMessageTitle(message.getMessageTitle());
-        existingMessage.setMessageBody(message.getMessageBody());
-        existingMessage.setPublic(isPublic);
+    existingMessage.setMessageTitle(message.getMessageTitle());
+    existingMessage.setMessageBody(message.getMessageBody());
+    existingMessage.setPublic(isPublic);
 
+    messageService.updateMessage(message.getId(), existingMessage);
 
-        messageService.updateMessage(message.getId(), existingMessage);
+        if (oauth2User != null) {
+            Integer githubId = oauth2User.getAttribute("id");
+            Optional<User> loggedInUser = userService.findByUserId(githubId);
+            loggedInUser.ifPresent(user -> model.addAttribute("loggedInUser", user));
+        }
+    model.addAttribute("message", existingMessage);
+    model.addAttribute("updateSuccess", true);
+    model.addAttribute("id", id);
+    model.addAttribute("page", page);
 
-        Logger logger = LoggerFactory.getLogger(WebController.class);
-        logger.info("Returning template: click-to-edit-default");
-        return "click-to-edit-default";
-    }
+    Logger logger = LoggerFactory.getLogger(WebController.class);
+    logger.info("Message updated successfully with id: " + id);
+    return "click-to-edit-default";
+}
 }
