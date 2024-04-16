@@ -12,7 +12,7 @@
         </label>
     </td>
     <td>
-        <button class="btn btn-danger" th:attr="hx-get='/web/messages/' + ${message.id} + '?page=' + ${page}"
+        <button class="btn btn-danger" th:attr="hx-get='/web/messages/' + ${message.id}"
                 hx-ext="data-th-text" data-th-text="#{cancel}">
             Cancel
         </button>

@@ -187,8 +187,8 @@ public class WebController {
 
     @GetMapping("/messages/{id}")
     public String oneMessage(@PathVariable Long id, Model model,
-                             @AuthenticationPrincipal OAuth2User oauth2User,
-                             @RequestParam("page") int page) {
+                             @AuthenticationPrincipal OAuth2User oauth2User
+                             /*@RequestParam("page") int page*/) {
         var message = messageRepository.findById(id).get();
         if (oauth2User != null) {
             Integer githubId = oauth2User.getAttribute("id");
@@ -198,25 +198,25 @@ public class WebController {
 
         model.addAttribute("message", message);
         model.addAttribute("id", id);
-        model.addAttribute("page", page);
+       // model.addAttribute("page", page);
 
         return "click-to-edit-default";
     }
 
     @PostMapping("/messages/{id}/edit")
-    public String editForm(Model model, @PathVariable Long id,
-                           @RequestParam("page") int page) {
+    public String editForm(Model model, @PathVariable Long id)
+//                           @RequestParam("page") int page)
+                           {
         var message = messageRepository.findById(id).get();
         model.addAttribute("message", message);
         model.addAttribute("id", id);
-        model.addAttribute("page", page);
         return "click-to-edit-form";
     }
 
     @PutMapping("/messages/{id}")
 public String editPost(@ModelAttribute Message message, Model model,
                        @AuthenticationPrincipal OAuth2User oauth2User,
-                       @RequestParam("page") int page,
+//                       @RequestParam("page") int page,
                        @RequestParam(name = "isPublic", defaultValue = "false") boolean isPublic,
                        @PathVariable Long id) {
     Message existingMessage = messageRepository.findById(id)
@@ -236,7 +236,6 @@ public String editPost(@ModelAttribute Message message, Model model,
     model.addAttribute("message", existingMessage);
     model.addAttribute("updateSuccess", true);
     model.addAttribute("id", id);
-    model.addAttribute("page", page);
 
     Logger logger = LoggerFactory.getLogger(WebController.class);
     logger.info("Message updated successfully with id: " + id);
